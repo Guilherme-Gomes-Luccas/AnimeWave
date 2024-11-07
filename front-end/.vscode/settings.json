@@ -1,0 +1,6 @@
+{
+    "editor.inlineSuggest.enabled": true,
+    "workbench.statusBar.visible": true,
+    "workbench.tree.enableStickyScroll": true,
+    "explorer.compactFolders": false
+}
