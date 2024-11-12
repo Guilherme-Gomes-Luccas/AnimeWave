@@ -3,6 +3,7 @@ import CSS from "csstype";
 
 import { Kanit } from "next/font/google";
 import React from "react";
+import Button from "@/components/button/Button";
 
 const kanit = Kanit({
 	weight: '400',
@@ -27,6 +28,15 @@ export default function Cadastro() {
 						<label className={kanit.className} style={style.text}>Nome completo:</label>
 						<input style={style.input} type="text" placeholder="José Santos"/>
 				</div>
+				
+
+				<div className="self-center">
+					<Button 
+						color="#17C93E"
+						text="Criar conta"
+					/>
+				</div>
+				
 			</form>
 		</div>
 	);
