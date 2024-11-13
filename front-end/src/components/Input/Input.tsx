@@ -8,15 +8,16 @@ const kanit = Kanit({
 
 interface Input {
     label: string,
-    placeholder: string | undefined
+    placeholder: string | undefined,
+    type: string
 }
 
-export default function Input({label, placeholder}:Input) {
+export default function Input({label, placeholder, type}:Input) {
     return(
         <div className="flex flex-col p-5">
             <label className={kanit.className}>{label}:</label>
 
-            <input type="text" placeholder={placeholder}/>
+            <input type={type} placeholder={placeholder}/>
         </div>
     )
 }
