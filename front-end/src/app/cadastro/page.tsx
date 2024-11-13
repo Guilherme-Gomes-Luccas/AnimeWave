@@ -4,6 +4,7 @@ import CSS from "csstype";
 import { Kanit } from "next/font/google";
 import React from "react";
 import Button from "@/components/Button";
+import GoBack from "@/components/GoBack";
 
 const kanit = Kanit({
 	weight: '400',
@@ -12,33 +13,37 @@ const kanit = Kanit({
 
 export default function Cadastro() {
 	return (
-		<div className="h-screen w-screen flex flex-col items-center justify-center">
-
-			<Image 
-				src={'/img/logov4.svg'}
-				width={480}
-				height={480}
-				alt="logo-animeWave"
-			/>
-
-			<form className="h-3/4 w-5/12 rounded-3xl mt-0 flex flex-col bg-white p-7 gap-6">
-				<h1 className={kanit.className} style={style.title}>Cadastro</h1>
-
-				<div className="flex flex-col p-5">
-						<label className={kanit.className} style={style.text}>Nome completo:</label>
-						<input style={style.input} type="text" placeholder="José Santos"/>
-				</div>
+		<>
+			<GoBack />
+			<div className="h-screen w-screen flex flex-col items-center justify-center">
 				
 
-				<div className="self-center">
-					<Button 
-						color="#17C93E"
-						text="Criar conta"
-					/>
-				</div>
-				
-			</form>
-		</div>
+				<Image 
+					src={'/img/logov4.svg'}
+					width={480}
+					height={480}
+					alt="logo-animeWave"
+				/>
+
+				<form className="h-3/4 w-5/12 rounded-3xl mt-0 flex flex-col bg-white p-7 gap-6">
+					<h1 className={kanit.className} style={style.title}>Cadastro</h1>
+
+					<div className="flex flex-col p-5">
+							<label className={kanit.className} style={style.text}>Nome completo:</label>
+							<input style={style.input} type="text" placeholder="José Santos"/>
+					</div>
+					
+
+					<div className="self-center">
+						<Button 
+							color="#17C93E"
+							text="Criar conta"
+						/>
+					</div>
+					
+				</form>
+			</div>
+		</>
 	);
 }
 
