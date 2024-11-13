@@ -3,7 +3,7 @@ import CSS from "csstype";
 
 import { Kanit } from "next/font/google";
 import React from "react";
-import Button from "@/components/button/Button";
+import Button from "@/components/Button";
 
 const kanit = Kanit({
 	weight: '400',
