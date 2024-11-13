@@ -1,9 +1,10 @@
 import Image from "next/image";
-import CSS from "csstype";
 
 import { Kanit } from "next/font/google";
 import React from "react";
+
 import Button from "@/components/Button";
+import Input from "@/components/Input/Input";
 
 const kanit = Kanit({
 	weight: '400',
@@ -21,18 +22,18 @@ export default function Cadastro() {
 				alt="logo-animeWave"
 			/>
 
-			<form className="h-3/4 w-5/12 rounded-3xl mt-0 flex flex-col bg-white p-7 gap-6">
+			<form className="h-3/4 w-5/12 rounded-3xl mt-0 flex flex-col bg-white p-7 gap-6 shadow-2xl">
 				<h1 className={kanit.className} style={style.title}>Cadastro</h1>
 
-				<div className="flex flex-col p-5">
-						<label className={kanit.className} style={style.text}>Nome completo:</label>
-						<input style={style.input} type="text" placeholder="José Santos"/>
-				</div>
 				
+				<Input 
+					label="Nome completo"
+					placeholder="José Santos"
+				/>
 
 				<div className="self-center">
 					<Button 
-						color="#17C93E"
+						color="#006400"
 						text="Criar conta"
 					/>
 				</div>
