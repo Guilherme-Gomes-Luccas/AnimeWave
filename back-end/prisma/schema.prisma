@@ -26,12 +26,7 @@ model User {
   name        String   @db.VarChar(100)
   email       String   @unique(map: "email_UNIQUE") @db.VarChar(200)
   pass        String   @db.VarChar(255)
-  profile     Profile?
-}
 
-model Profile {
-  public_id   String   @id @db.VarChar(300) // Define como chave primária e refere-se ao public_id do User
+  foto        String?   @db.VarChar(255)
   description String?  @db.Text()
-
-  user        User     @relation(fields: [public_id], references: [public_id])
 }
