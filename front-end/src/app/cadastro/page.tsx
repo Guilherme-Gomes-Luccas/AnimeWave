@@ -1,10 +1,11 @@
 import Image from "next/image";
-import CSS from "csstype";
 
 import { Kanit } from "next/font/google";
 import React from "react";
+
 import Button from "@/components/Button";
-import GoBack from "@/components/GoBack";
+import Input from "@/components/Input/Input";
+import Link from "next/link";
 
 const kanit = Kanit({
 	weight: '400',
@@ -25,44 +26,64 @@ export default function Cadastro() {
 					alt="logo-animeWave"
 				/>
 
-				<form className="h-3/4 w-5/12 rounded-3xl mt-0 flex flex-col bg-white p-7 gap-6">
-					<h1 className={kanit.className} style={style.title}>Cadastro</h1>
+			<form className="h-3/4 w-5/12 rounded-3xl mt-0 flex flex-col bg-white p-7 gap-6 shadow-2xl">
+				<h1 className={kanit.className} style={style.title}>Cadastro</h1>
+				
+				<div>
+					<Input
+						label="Nome"
+						placeholder="Ex: José Santos"
+						type="text"
+					/>
 
-					<div className="flex flex-col p-5">
-							<label className={kanit.className} style={style.text}>Nome completo:</label>
-							<input style={style.input} type="text" placeholder="José Santos"/>
-					</div>
-					
+					<Input
+						label="Email"
+						placeholder="Ex: jose.santos@email.com"
+						type="email"
+					/>
 
-					<div className="self-center">
-						<Button 
-							color="#17C93E"
-							text="Criar conta"
-						/>
-					</div>
-					
-				</form>
-			</div>
-		</>
+					<Input
+						label="Senha"
+						placeholder="Digite sua senha"
+						type="password"
+					/>
+
+					<Input
+						label="Confirme sua senha"
+						placeholder="Digite novamente sua senha"
+						type="password"
+					/>
+				</div>
+				
+				
+
+				<div className="flex flex-col items-center self-center gap-7">
+					<Link
+						href="/login"
+						className={kanit.className}
+						style={style.link}
+
+					>Já tem uma conta? Clique aqui para acessar</Link>
+
+					<Button 
+						color="#006400"
+						text="Criar conta"
+					/>
+				</div>
+				
+			</form>
+		</div>
 	);
 }
 
 const style ={
 	title: {
 		color: "#000000",
-		fontSize: "26px",
+		fontSize: "28px",
 	},
 
-	text: {
-		color: "#000000",
-		fontSize: "20px",
-		weight: "300",
-		marginBottom: "8px"
-	},
-
-	input: {
-		borderRadius: "15px",
-		background: "#D9D9D9",
-		height: "30px",
+	link: {
+		color: "#1E90FF",
+		textDecoration: "underline",
 	}
 };
