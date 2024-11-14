@@ -18,19 +18,20 @@ export default function Cadastro() {
 	return (
 		<>
 			<GoBack />
-			<div className="h-screen w-screen flex flex-col items-center justify-center">
-
-
-				<Image
+			<div className="w-screen flex flex-col items-center justify-center">
+			
+				<Image 
 					src={'/img/logov4.svg'}
-					width={480}
-					height={480}
+					width={640}
+					height={640}
 					alt="logo-animeWave"
-				/>
+					
+					className="ml-24"
+				/>				
 
 				<form className="h-3/4 w-5/12 rounded-3xl mt-0 flex flex-col bg-white p-7 gap-6 shadow-2xl">
 					<h1 className={kanit.className} style={style.title}>Cadastro</h1>
-
+					
 					<div>
 						<Input
 							label="Nome"
@@ -56,8 +57,8 @@ export default function Cadastro() {
 							type="password"
 						/>
 					</div>
-
-
+					
+					
 
 					<div className="flex flex-col items-center self-center gap-7">
 						<Link
@@ -67,15 +68,16 @@ export default function Cadastro() {
 
 						>Já tem uma conta? Clique aqui para acessar</Link>
 
-						<Button
+						<Button 
 							color="#006400"
 							text="Criar conta"
 						/>
 					</div>
-
+					
 				</form>
 			</div>
 		</>
+
 	);
 }
 

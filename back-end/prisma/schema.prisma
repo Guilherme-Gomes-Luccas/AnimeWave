@@ -13,3 +13,25 @@ datasource db {
   //provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+//TO DO:
+// - Lista de amigos
+// - Seguindo\Seguidores
+// - Bloquear
+// - Publicações
+
+model User {
+  id          Int      @id @default(autoincrement())
+  public_id   String   @unique @db.VarChar(300) @default(uuid())
+  name        String   @db.VarChar(100)
+  email       String   @unique(map: "email_UNIQUE") @db.VarChar(200)
+  pass        String   @db.VarChar(255)
+  profile     Profile?
+}
+
+model Profile {
+  public_id   String   @id @db.VarChar(300) // Define como chave primária e refere-se ao public_id do User
+  description String?  @db.Text()
+
+  user        User     @relation(fields: [public_id], references: [public_id])
+}
