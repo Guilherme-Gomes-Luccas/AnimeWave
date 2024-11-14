@@ -7,6 +7,7 @@ import React from "react";
 import Button from "@/components/Button";
 import Input from "@/components/Input/Input";
 import Link from "next/link";
+import GoBack from "@/components/GoBack";
 
 const kanit = Kanit({
 	weight: '400',
@@ -74,13 +75,13 @@ export default function Cadastro() {
 				
 			</form>
 		</div>
+	</>
 	);
 }
 
 const style ={
 	title: {
 		color: "#000000",
-		fontSize: "28px",
 		fontSize: "28px",
 	},
 
