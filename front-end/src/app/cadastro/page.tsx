@@ -18,9 +18,11 @@ export default function Cadastro() {
 
 			<Image 
 				src={'/img/logov4.svg'}
-				width={480}
-				height={480}
+				width={640}
+				height={640}
 				alt="logo-animeWave"
+				
+				className="ml-24"
 			/>
 
 			<form className="h-3/4 w-5/12 rounded-3xl mt-0 flex flex-col bg-white p-7 gap-6 shadow-2xl">
