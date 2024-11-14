@@ -5,6 +5,7 @@ import React from "react";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input/Input";
+import Link from "next/link";
 
 const kanit = Kanit({
 	weight: '400',
@@ -51,8 +52,16 @@ export default function Cadastro() {
 					/>
 				</div>
 				
+				
 
-				<div className="self-center">
+				<div className="flex flex-col items-center self-center gap-7">
+					<Link
+						href="/login"
+						className={kanit.className}
+						style={style.link}
+
+					>Já tem uma conta? Clique aqui para acessar</Link>
+
 					<Button 
 						color="#006400"
 						text="Criar conta"
@@ -69,4 +78,9 @@ const style ={
 		color: "#000000",
 		fontSize: "28px",
 	},
+
+	link: {
+		color: "#1E90FF",
+		textDecoration: "underline",
+	}
 };
