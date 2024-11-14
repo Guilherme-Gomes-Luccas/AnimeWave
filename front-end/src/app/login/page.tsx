@@ -21,8 +21,10 @@ export default function Login() {
                   <label className="pt-2 pb-2">Email</label>
                   <input type="text" className="bg-[#D9D9D9] rounded-lg h-9 pl-2" />
 
-                  <label className="pt-8 pb-2">Senha</label>
-                  <input type="password" className="bg-[#D9D9D9] rounded-lg h-9 pl-2 mb-6" />
+                  <label className="pt-8">Senha</label>
+                  <input type="password" className="bg-[#D9D9D9] rounded-lg h-9 pl-2" />
+
+                  <a href="/" className="pb-8 pl-1 pt-2 font-medium text-blue-500">Esqueci minha senha</a>
 
                   <div className="self-center">
                     <Button color="#006400" text="Acessar conta"/>
