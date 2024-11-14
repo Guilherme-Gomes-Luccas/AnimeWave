@@ -3,9 +3,11 @@ import Image from "next/image";
 import { Kanit } from "next/font/google";
 import React from "react";
 
+
 import Button from "@/components/Button";
 import Input from "@/components/Input/Input";
 import Link from "next/link";
+import GoBack from "@/components/GoBack";
 
 const kanit = Kanit({
 	weight: '400',
@@ -14,8 +16,10 @@ const kanit = Kanit({
 
 export default function Cadastro() {
 	return (
-		<div className="h-screen w-screen flex flex-col items-center justify-center">
-
+		<>
+			<GoBack />
+			<div className="w-screen flex flex-col items-center justify-center">
+			
 			<Image 
 				src={'/img/logov4.svg'}
 				width={640}
@@ -23,7 +27,7 @@ export default function Cadastro() {
 				alt="logo-animeWave"
 				
 				className="ml-24"
-			/>
+			/>				
 
 			<form className="h-3/4 w-5/12 rounded-3xl mt-0 flex flex-col bg-white p-7 gap-6 shadow-2xl">
 				<h1 className={kanit.className} style={style.title}>Cadastro</h1>
@@ -72,6 +76,7 @@ export default function Cadastro() {
 				
 			</form>
 		</div>
+		</>
 	);
 }
 
