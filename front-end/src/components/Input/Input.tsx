@@ -9,15 +9,16 @@ const kanit = Kanit({
 interface Input {
     label: string,
     placeholder: string | undefined,
-    type: string
+    type: string,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export default function Input({label, placeholder, type}:Input) {
+export default function Input({label, placeholder, type, onChange}:Input) {
     return(
-        <div className="flex flex-col p-5">
+        <div className="flex flex-col p-4">
             <label className={kanit.className}>{label}:</label>
 
-            <input type={type} placeholder={placeholder}/>
+            <input type={type} placeholder={placeholder} onChange={onChange}/>
         </div>
     )
 }

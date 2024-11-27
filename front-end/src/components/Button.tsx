@@ -5,12 +5,13 @@ const kanit = Kanit({
 	subsets: ['latin']
 });
 
-interface Button {
+interface ButtonProps {
     color: string,
-    text: string
+    text: string,
+    type?: "submit" | "reset" | "button"
 }
 
-export default function Button({color, text}: Button) {
+export default function Button({color, text, type}: ButtonProps) {
     return(
         <button
             style={{
@@ -24,6 +25,8 @@ export default function Button({color, text}: Button) {
             }}
 
             className={kanit.className}
+
+            type={type || "submit"}
             
         >{text}</button>
     )

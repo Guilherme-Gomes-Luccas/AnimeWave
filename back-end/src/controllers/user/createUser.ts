@@ -1,6 +1,46 @@
-import { Controller } from "@nestjs/common";
+import { Controller, Post, Req, Res } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { validateUserToCreate } from 'src/models/schemas/userSchema';
+import { v4 as uuid } from 'uuid';
+import * as bcrypt from 'bcrypt';
+import { createUser } from 'src/models/userModel';
 
-@Controller("/criar-conta")
-export class CreateUser {
+@Controller('novo-usuario')
+export class CreateUserController {
+  @Post()
+  async create(@Req() req: Request, @Res() res: Response) {
+    try {
+      const { name, email, password } = req.body;
 
+      const public_id = uuid();
+      const validatedUser = validateUserToCreate({
+        name,
+        email,
+        password,
+        public_id,
+      });
+
+      if (!validatedUser.success) {
+        res.status(400).send(validatedUser.error.issues[0].message);
+      }
+
+      validatedUser.data.password = bcrypt.hashSync(
+        validatedUser.data.password,
+        10,
+      );
+
+      await createUser({
+        name: validatedUser.data.name,
+        email: validatedUser.data.email,
+        password: validatedUser.data.password,
+        public_id: validatedUser.data.public_id,
+      });
+
+      res.status(201).send('Usuário criado com sucesso');
+    } catch (error) {
+      if (error.code === 'P2002') {
+        res.status(400).send('Email ja cadastrado');
+      }
+    }
+  }
 }
