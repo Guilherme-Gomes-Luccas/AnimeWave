@@ -50,6 +50,17 @@ export default function Cadastro() {
 					});
 				});
 			}
+
+			const response = await fetch("http://localhost:3001/novo-usuario", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({name, email, password})
+			})
+
+			console.log(await response.json())
+			
 		}
 	};
 	return (

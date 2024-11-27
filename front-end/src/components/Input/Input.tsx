@@ -10,7 +10,7 @@ interface Input {
     label: string,
     placeholder: string | undefined,
     type: string,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void | null
 }
 
 export default function Input({label, placeholder, type, onChange}:Input) {
