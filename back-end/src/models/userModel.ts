@@ -17,7 +17,7 @@ export const createUser = async (user: User) => {
   return result;
 };
 
-/*export const getAll = async () => {
+export const getAll = async () => {
   const users = await prisma.user.findMany({
     select: {
       id: true,
@@ -100,4 +100,4 @@ export const update = async (user) => {
   });
 
   return result;
-};*/
+};
