@@ -29,17 +29,20 @@ export class CreateUserController {
         10,
       );
 
-      await createUser({
+      const user = await createUser({
         name: validatedUser.data.name,
         email: validatedUser.data.email,
         password: validatedUser.data.password,
         public_id: validatedUser.data.public_id,
       });
 
-      res.status(201).send('Usuário criado com sucesso');
+      res.status(201).json({
+        success: 'Usuário criado com sucesso',
+        user: user});
+
     } catch (error) {
       if (error.code === 'P2002') {
-        res.status(400).send('Email ja cadastrado');
+        res.status(400).json({error: 'Email já cadastrado'});
       }
     }
   }

@@ -4,7 +4,7 @@ import { User } from './userInterface';
 const prisma = new PrismaClient();
 
 export const createUser = async (user: User) => {
-  const result = await prisma.users.create({
+  const result = await prisma.user.create({
     data: user,
     select: {
       id: true,
