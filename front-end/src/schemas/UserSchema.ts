@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { User } from './userInterface';
+import { UserLogin } from './loginInterface';
 
 export const userSchema = z.object({
   name: z
@@ -30,4 +31,11 @@ export const userSchema = z.object({
 
 export const validateUserToCreate = (user: User) => {
   return userSchema.safeParse(user);
+};
+
+export const validateUserToLogin = (user: UserLogin) => {
+  const partialUserSchema = userSchema.partial({
+    name: true,
+  });
+  return partialUserSchema.safeParse(user);
 };

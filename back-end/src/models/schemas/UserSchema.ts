@@ -13,7 +13,6 @@ const userSchema = z.object({
     required_error: 'O ID público é obrigatório',
     invalid_type_error: 'O ID público deve ser uma string',
   }),
-
   name: z
     .string({
       required_error: 'O nome é obrigatório',
@@ -51,7 +50,7 @@ export const validateUserToCreate = (user: User) => {
   return partialUserSchema.safeParse(user);
 };
 
-export const validateUserToLogin = (user) => {
+export const validateUserToLogin = (user: User) => {
   const partialUserSchema = userSchema.partial({
     id: true,
     public_id: true,
