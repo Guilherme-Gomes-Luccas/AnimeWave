@@ -13,8 +13,6 @@ import Text from "@/components/Text";
 import Link from "next/link";
 import GoBack from "@/components/GoBack";
 
-import { validateUserToCreate } from "../../schemas/UserSchema";
-
 const kanit = Kanit({
 	weight: '400',
 	subsets: ['latin']
@@ -22,7 +20,7 @@ const kanit = Kanit({
 
 interface Error {
 	message: string;
-	path: string | number;
+	path: Array<string>;
 }
 export default function Cadastro() {
 	const [ name, setName ] = useState("");
@@ -32,7 +30,8 @@ export default function Cadastro() {
 
 	const [ nameError, setNameError ] = useState("");
 	const [ emailError, setEmailError] = useState("");
-	const [passwordError, setpasswordError] = useState("");
+	const [ passwordError, setPasswordError ] = useState("");
+	const [ error, setError ] = useState("");
 
 	const messageError: Array<Error> = [];
 
@@ -47,44 +46,48 @@ export default function Cadastro() {
 	} 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setError("");
 
-		if(password !== confirmPassword) {
+		if(!name || !email || !password) {
+			setError('Preencha todos os campos!');
+		
+		}else if(password !== confirmPassword) {
 			/*console.log('aaa')
 			messageError.push({
 				message: "As senhas digitadas devem ser iguais",
 				path: "confirmPassword",
 			})*/
 
-			setpasswordError("As senhas digitadas devem ser iguais!");
+			setPasswordError("As senhas digitadas devem ser iguais!");
 		
 		} else {
-			const user = validateUserToCreate({name, email, password, confirmPassword});
-	
-			if (!user.success) {
-				user.error?.issues.map((issue) => {
-					messageError.push({
-						message: issue.message,
-						path: issue.path[0],
-					});
-
-					console.log(issue)
-
-					issue.path[0] == 'name' ? setNameError(issue.message) : setNameError('');
-					issue.path[0] == 'email' ? setEmailError(issue.message) : setEmailError('');
-					issue.path[0] == 'password' ? setPassword(issue.message) : setpasswordError('');
-
-				});
-			}
-
-			console.log(nameError)
 			const response = await fetch("http://localhost:3001/novo-usuario", {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({name, email, password})
-			})
-			
+			});
+
+			const data = await response.json();
+
+			if(data.error) {
+				data.error.map((err: Error) => {
+					switch(err.path[0]) {
+						case 'name':
+							setNameError(err.message);
+							break;
+
+						case 'email':
+							setEmailError(err.message);
+							break;
+
+						case 'password':
+							setPasswordError(err.message);
+							break;
+					}
+				})
+			}
 		}
 
 	};
@@ -115,7 +118,7 @@ export default function Cadastro() {
 						/>
 
 						{nameError && <Text
-							content={passwordError}
+							content={nameError}
 							color="red"
 							size="14px"
 						/>}
@@ -177,6 +180,12 @@ export default function Cadastro() {
 							text="Criar conta"
 							type="submit"
 						/>
+
+						{error && <Text
+							content={error}
+							color="red"
+							size="14px"
+						/>}
 					</div>
 					
 				</form>
