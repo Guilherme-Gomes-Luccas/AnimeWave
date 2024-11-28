@@ -11,7 +11,7 @@ export class CreateUserController {
   async create(@Req() req: Request, @Res() res: Response) {
     try {
       const { name, email, password } = req.body;
-
+      
       const public_id = uuid();
       const validatedUser = validateUserToCreate({
         name,
