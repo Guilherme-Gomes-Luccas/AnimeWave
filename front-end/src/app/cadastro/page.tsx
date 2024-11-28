@@ -9,6 +9,7 @@ import "./style.css";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input/Input";
+import Text from "@/components/Text";
 import Link from "next/link";
 import GoBack from "@/components/GoBack";
 
@@ -29,15 +30,32 @@ export default function Cadastro() {
 	const [ password, setPassword ] = useState("");
 	const [ confirmPassword, setConfirmPassword ] = useState("");
 
+	const [ nameError, setNameError ] = useState("");
+	const [ emailError, setEmailError] = useState("");
+	const [passwordError, setpasswordError] = useState("");
+
 	const messageError: Array<Error> = [];
+
+	const errorExists = (path: string): string[] => {
+		console.log('aaaaaaaaaaaaaa')
+		const error = messageError.map((message) => {
+			console.log(message)
+		})
+
+		console.log("erroo: ", error)
+		return ['error']
+	} 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		if(password !== confirmPassword) {
+			/*console.log('aaa')
 			messageError.push({
 				message: "As senhas digitadas devem ser iguais",
 				path: "confirmPassword",
-			})
+			})*/
+
+			setpasswordError("As senhas digitadas devem ser iguais!");
 		
 		} else {
 			const user = validateUserToCreate({name, email, password, confirmPassword});
@@ -48,9 +66,17 @@ export default function Cadastro() {
 						message: issue.message,
 						path: issue.path[0],
 					});
+
+					console.log(issue)
+
+					issue.path[0] == 'name' ? setNameError(issue.message) : setNameError('');
+					issue.path[0] == 'email' ? setEmailError(issue.message) : setEmailError('');
+					issue.path[0] == 'password' ? setPassword(issue.message) : setpasswordError('');
+
 				});
 			}
 
+			console.log(nameError)
 			const response = await fetch("http://localhost:3001/novo-usuario", {
 				method: 'POST',
 				headers: {
@@ -58,10 +84,9 @@ export default function Cadastro() {
 				},
 				body: JSON.stringify({name, email, password})
 			})
-
-			console.log(await response.json())
 			
 		}
+
 	};
 	return (
 		<>
@@ -89,12 +114,24 @@ export default function Cadastro() {
 							onChange={(e) => setName(e.target.value)}
 						/>
 
+						{nameError && <Text
+							content={passwordError}
+							color="red"
+							size="14px"
+						/>}
+
 						<Input
 							label="Email*"
 							placeholder="Ex: jose.santos@email.com"
 							type="email"
 							onChange={(e) => setEmail(e.target.value)}
 						/>
+
+						{emailError && <Text
+							content={passwordError}
+							color="red"
+							size="14px"
+						/>}
 
 						<Input
 							label="Senha*"
@@ -103,12 +140,25 @@ export default function Cadastro() {
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 
+
+						{passwordError && <Text
+							content={passwordError}
+							color="red"
+							size="14px"
+						/>}
+
 						<Input
 							label="Confirme sua senha*"
 							placeholder="Digite novamente sua senha"
 							type="password"
 							onChange={(e) => setConfirmPassword(e.target.value)}
 						/>
+
+						{passwordError && <Text
+							content={passwordError}
+							color="red"
+							size="14px"
+						/>}
 					</div>
 
 					<div className="flex flex-col items-center self-center gap-7">
