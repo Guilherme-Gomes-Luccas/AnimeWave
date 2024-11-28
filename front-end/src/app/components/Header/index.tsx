@@ -4,9 +4,6 @@ import logo from "./logo.svg";
 import "./style.css"
 import Link from "next/link";
 
-
-
-
 export default function Header() {
     return (
         <div className='flex justify-between bg-header-blue w-full bg-blue-950 '>
@@ -27,11 +24,5 @@ export default function Header() {
             </div>
         </div>
     )
-}
-
-const style = {
-    header: {
-        backgroundColor: '#black',
-    }
 
 };
