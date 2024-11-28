@@ -1,8 +1,6 @@
-import { v4 as uuid } from "uuid";
-import bcrypt from "bcrypt";
+import { v4 as uuid } from 'uuid';
+import bcrypt from 'bcrypt';
 
-const logout = async (req, res) =>{
+const logout = async (req, res) => {};
 
-}
-
-export default logout
+export default logout;

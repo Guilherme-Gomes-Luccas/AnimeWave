@@ -11,7 +11,7 @@ export class CreateUserController {
   async create(@Req() req: Request, @Res() res: Response) {
     try {
       const { name, email, password } = req.body;
-      
+
       const public_id = uuid();
       const validatedUser = validateUserToCreate({
         name,
@@ -20,8 +20,10 @@ export class CreateUserController {
         public_id,
       });
 
+      const errors = validatedUser.error.issues;
+
       if (!validatedUser.success) {
-        res.status(400).send(validatedUser.error.issues[0].message);
+        res.status(400).json({ error: errors });
       }
 
       validatedUser.data.password = bcrypt.hashSync(
@@ -38,11 +40,11 @@ export class CreateUserController {
 
       res.status(201).json({
         success: 'Usuário criado com sucesso',
-        user: user});
-
+        user: user,
+      });
     } catch (error) {
       if (error.code === 'P2002') {
-        res.status(400).json({error: 'Email já cadastrado'});
+        res.status(400).json({ error: 'Email já cadastrado' });
       }
     }
   }
