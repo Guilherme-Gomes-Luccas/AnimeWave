@@ -1,4 +1,5 @@
 import { Kanit } from "next/font/google";
+import Image from "next/image";
 
 const kanit = Kanit({
 	weight: '400',
@@ -8,26 +9,42 @@ const kanit = Kanit({
 interface ButtonProps {
     color: string,
     text: string,
-    type?: "submit" | "reset" | "button"
+    type?: "submit" | "reset" | "button",
+    border?: string,
+    textColor?: string,
+    icon?: string ,
+    onClick?: () => void
 }
 
-export default function Button({color, text, type}: ButtonProps) {
+export default function Button({color, text, type, border, textColor, icon, onClick}: ButtonProps) {
     return(
         <button
             style={{
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
                 background: color,
                 borderRadius: "23px",
-                color: "white",
-                width: "250px",
+                color: textColor ||"white",
+                width: "270px",
                 height: "50px",
                 fontWeight: "500",
-                fontSize: "24px"
+                fontSize: "22px",
+                border: border || "none",
+                padding: "8px"
             }}
 
             className={kanit.className}
 
             type={type || "submit"}
+
+            onClick={onClick}
             
-        >{text}</button>
+        >{icon && <Image 
+            src={icon} 
+            width={30}
+            height={30}
+            alt="icon-google"/>}
+        {text}</button>
     )
 }

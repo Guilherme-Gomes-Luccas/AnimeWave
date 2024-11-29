@@ -12,6 +12,7 @@ import Input from "@/components/Input/Input";
 import Text from "@/components/Text";
 import Link from "next/link";
 import GoBack from "@/components/GoBack";
+import axios from "axios";
 
 const kanit = Kanit({
 	weight: '400',
@@ -33,31 +34,17 @@ export default function Cadastro() {
 	const [ passwordError, setPasswordError ] = useState("");
 	const [ error, setError ] = useState("");
 
-	const messageError: Array<Error> = [];
-
-	const errorExists = (path: string): string[] => {
-		console.log('aaaaaaaaaaaaaa')
-		const error = messageError.map((message) => {
-			console.log(message)
-		})
-
-		console.log("erroo: ", error)
-		return ['error']
-	} 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setError("");
+		setNameError("");
+		setEmailError("");
+		setPasswordError("");
 
 		if(!name || !email || !password) {
 			setError('Preencha todos os campos!');
 		
 		}else if(password !== confirmPassword) {
-			/*console.log('aaa')
-			messageError.push({
-				message: "As senhas digitadas devem ser iguais",
-				path: "confirmPassword",
-			})*/
-
 			setPasswordError("As senhas digitadas devem ser iguais!");
 		
 		} else {
@@ -87,10 +74,16 @@ export default function Cadastro() {
 							break;
 					}
 				})
+			}else {
+				window.location.href = '/login';
 			}
 		}
 
 	};
+
+	const handleGoogleSubmit = async () => {
+		window.location.href = "http://localhost:3001/auth/google/login";
+	}
 	return (
 		<>
 			<GoBack />
@@ -106,63 +99,79 @@ export default function Cadastro() {
 				/>				
 
 				<form onSubmit={handleSubmit}
-				className="h-fit w-5/12 rounded-3xl mt-0 flex flex-col bg-white p-7 shadow-2xl mb-3">
+				className="h-fit w-8/12 rounded-3xl mt-0 flex flex-col bg-white p-7 shadow-2xl">
 					<h1 className={kanit.className}>Cadastro</h1>
-					
-					<div>
-						<Input
-							label="Nome*"
-							placeholder="Ex: José Santos"
-							type="text"
-							onChange={(e) => setName(e.target.value)}
-						/>
+			
+					<div className="flex w-full">
+						<div className="flex flex-col w-6/12">
+							<Input
+								label="Nome*"
+								placeholder="Ex: José Santos"
+								type="text"
+								onChange={(e) => setName(e.target.value)}
+							/>
 
-						{nameError && <Text
-							content={nameError}
-							color="red"
-							size="14px"
-						/>}
+							{nameError && <Text
+								content={nameError}
+								color="red"
+								size="14px"
+							/>}
+						</div>
 
-						<Input
-							label="Email*"
-							placeholder="Ex: jose.santos@email.com"
-							type="email"
-							onChange={(e) => setEmail(e.target.value)}
-						/>
+						<div className="flex flex-col w-6/12">
+							<Input
+								label="Email*"
+								placeholder="Ex: jose.santos@email.com"
+								type="email"
+								onChange={(e) => setEmail(e.target.value)}
+							/>
 
-						{emailError && <Text
-							content={passwordError}
-							color="red"
-							size="14px"
-						/>}
-
-						<Input
-							label="Senha*"
-							placeholder="Digite sua senha"
-							type="password"
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-
-
-						{passwordError && <Text
-							content={passwordError}
-							color="red"
-							size="14px"
-						/>}
-
-						<Input
-							label="Confirme sua senha*"
-							placeholder="Digite novamente sua senha"
-							type="password"
-							onChange={(e) => setConfirmPassword(e.target.value)}
-						/>
-
-						{passwordError && <Text
-							content={passwordError}
-							color="red"
-							size="14px"
-						/>}
+							{emailError && <Text
+								content={emailError}
+								color="red"
+								size="14px"
+							/>}
+						</div>
 					</div>
+
+					<div className="flex w-full mb-5">
+						<div className="flex flex-col w-6/12">
+							<Input
+								label="Senha*"
+								placeholder="Digite sua senha"
+								type="password"
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+
+
+							{passwordError && <Text
+								content={passwordError}
+								color="red"
+								size="14px"
+							/>}
+						</div>
+
+						<div className="flex flex-col w-6/12">
+							<Input
+								label="Confirme sua senha*"
+								placeholder="Digite novamente sua senha"
+								type="password"
+								onChange={(e) => setConfirmPassword(e.target.value)}
+							/>
+
+							{passwordError && <Text
+								content={passwordError}
+								color="red"
+								size="14px"
+							/>}
+						</div>
+					</div>
+
+					{error && <Text
+							content={error}
+							color="red"
+							size="14px"
+					/>}
 
 					<div className="flex flex-col items-center self-center gap-7">
 						<Link
@@ -181,11 +190,17 @@ export default function Cadastro() {
 							type="submit"
 						/>
 
-						{error && <Text
-							content={error}
-							color="red"
-							size="14px"
-						/>}
+						<p className={`${kanit.className} text-black text-lg`}>OU</p>
+
+						<Button 
+							color="white"
+							text="Entrar com Google"
+							type="button"
+							border="black solid 2px"
+							textColor="black"
+							icon="/img/google.svg"
+							onClick={handleGoogleSubmit}
+						/>
 					</div>
 					
 				</form>

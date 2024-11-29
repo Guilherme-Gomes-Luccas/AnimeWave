@@ -15,7 +15,7 @@ interface Input {
 
 export default function Input({label, placeholder, type, onChange}:Input) {
     return(
-        <div className="flex flex-col p-4">
+        <div className="flex flex-col p-4 w-full">
             <label className={kanit.className}>{label}:</label>
 
             <input type={type} placeholder={placeholder} onChange={onChange}/>
