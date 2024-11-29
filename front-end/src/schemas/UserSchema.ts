@@ -36,6 +36,7 @@ export const validateUserToCreate = (user: User) => {
 export const validateUserToLogin = (user: UserLogin) => {
   const partialUserSchema = userSchema.partial({
     name: true,
+    confirmPassword: true
   });
   return partialUserSchema.safeParse(user);
 };

@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { CreateUserController } from './controllers/user/createUser';
 import { GoogleStrategy } from './controllers/auth/strategies/google.strategy';
 import { LoginGoogleController } from './controllers/auth/loginGoogle';
-import { LoginUserController } from './controllers/auth/login';
+import { LoginUser } from './controllers/auth/login';
 
 @Module({
   imports: [],
@@ -12,8 +12,8 @@ import { LoginUserController } from './controllers/auth/login';
     AppController,
     CreateUserController,
     LoginGoogleController,
-    LoginUserController,
+    LoginUser
   ],
-  providers: [AppService, GoogleStrategy],
+  providers: [AppService, GoogleStrategy]
 })
 export class AppModule {}
