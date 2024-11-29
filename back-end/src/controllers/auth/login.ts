@@ -1,7 +1,7 @@
 import { Controller, Get, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { validateUserToLogin } from 'src/models/schemas/userSchema';
-import { getByEmail } from 'src/models/userModel';
+import { getUserByEmail } from 'src/models/userModel';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../../config';
@@ -22,7 +22,7 @@ export class LoginUserController {
       }
 
       //Buscar user pelo email
-      const user = await getByEmail(loginValidated.data.email);
+      const user = await getUserByEmail(loginValidated.data.email);
       if (!user) {
         return res.status(400).json({
           error: 'Email ou senha inválida! (email não encontrado)',

@@ -20,7 +20,7 @@ export class CreateUserController {
         public_id,
       });
 
-      const errors = validatedUser.error.issues;
+      const errors = validatedUser.error?.issues;
 
       if (!validatedUser.success) {
         res.status(400).json({ error: errors });
@@ -44,7 +44,9 @@ export class CreateUserController {
       });
     } catch (error) {
       if (error.code === 'P2002') {
-        res.status(400).json({ error: 'Email já cadastrado' });
+        res.status(400).json({
+          error: [{ message: 'Email já cadastrado', path: ['email'] }],
+        });
       }
     }
   }
