@@ -12,7 +12,6 @@ import Input from "@/components/Input/Input";
 import Text from "@/components/Text";
 import Link from "next/link";
 import GoBack from "@/components/GoBack";
-import axios from "axios";
 
 const kanit = Kanit({
 	weight: '400',

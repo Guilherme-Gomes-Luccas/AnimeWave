@@ -12,11 +12,12 @@ interface ButtonProps {
     type?: "submit" | "reset" | "button",
     border?: string,
     textColor?: string,
-    icon?: string ,
+    icon?: string,
+    width?: string,
     onClick?: () => void
 }
 
-export default function Button({color, text, type, border, textColor, icon, onClick}: ButtonProps) {
+export default function Button({color, text, type, border, textColor, icon, width, onClick}: ButtonProps) {
     return(
         <button
             style={{
@@ -26,7 +27,7 @@ export default function Button({color, text, type, border, textColor, icon, onCl
                 background: color,
                 borderRadius: "23px",
                 color: textColor ||"white",
-                width: "270px",
+                width: width||"270px",
                 height: "50px",
                 fontWeight: "500",
                 fontSize: "22px",
