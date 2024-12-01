@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
+import { User } from 'src/models/userInterface';
 import { createUser, getUserByEmail } from 'src/models/userModel';
 import { v4 as uuid } from 'uuid';
 
@@ -21,9 +22,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     profile: any,
     done: VerifyCallback,
   ) {
-    let user = await getUserByEmail(profile.emails[0].value);
+    let user: User = await getUserByEmail(profile.emails[0].value);
 
-    console.log();
     if (!user) {
       user = await createUser({
         name: profile.displayName,

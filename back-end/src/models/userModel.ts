@@ -27,12 +27,28 @@ export const getUserByEmail = async (email: string) => {
       name: true,
       email: true,
       password: true,
+      photo: true,
     },
   });
 
   return user;
 };
 
+export const updateUserData = async (user: User) => {
+  const result = await prisma.user.update({
+    where: {
+      public_id: user.public_id,
+    },
+    data: user,
+    select: {
+      public_id: true,
+      access_token: true,
+      refresh_token: true,
+    },
+  });
+
+  return result;
+};
 export const getAll = async () => {
   const users = await prisma.user.findMany({
     select: {
