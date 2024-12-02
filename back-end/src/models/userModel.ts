@@ -49,6 +49,28 @@ export const updateUserData = async (user: User) => {
 
   return result;
 };
+
+export const verifyRefreshToken = async (
+  refreshToken: string,
+  public_id: string,
+) => {
+  const result = prisma.user.findUnique({
+    where: {
+      public_id,
+      refresh_token: refreshToken,
+    },
+
+    select: {
+      name: true,
+      email: true,
+      password: true,
+      public_id: true,
+      access_token: true,
+    },
+  });
+
+  return result;
+};
 export const getAll = async () => {
   const users = await prisma.user.findMany({
     select: {
