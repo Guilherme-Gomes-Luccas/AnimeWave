@@ -2,6 +2,7 @@ import Image from "next/image";
 import Header from "./components/Header";
 import feed from "./image/feed.png";
 import SearchBar from "./components/SearchBar";
+import Footer from "./components/Footer";
 
 
 export default function Home() {
@@ -14,7 +15,7 @@ export default function Home() {
     'Solo Levening',
     'Melhor anime de Fotboll',
     'Pokemon',
-    
+
   ];
 
 
@@ -27,7 +28,7 @@ export default function Home() {
         <Header />
       </div>
 
-      <div className="w-full max-h-24">
+      <div className=" w-full h-fullmax-h-24">
         <Image
           src={feed}
           width={1920}
@@ -36,12 +37,13 @@ export default function Home() {
         />
       </div>
 
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div>
-       
+      <div className=" bg-[#E1F8FF] flex  items-start justify-center pt-8">
         <SearchBar items={items} />
       </div>
-    </div>
+
+      <div>
+        <Footer />
+      </div>
 
 
     </div>

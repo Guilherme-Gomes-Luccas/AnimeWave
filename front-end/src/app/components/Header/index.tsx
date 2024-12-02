@@ -15,14 +15,10 @@ export default function Header() {
                     height={400}
                     alt="logo-animeWave"
                 />
-
-    
-      
             <div className="flex justify-center self-center  px-28 font-kanit text-xl ">
                 <Link href={""} className="text-white px-4 mx-14   "> Cadastro</Link>
                 <Link href={""} className="text-white px-4"> Login</Link>
             </div>
         </div>
     )
-
 };
