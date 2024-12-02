@@ -50,7 +50,36 @@ export default function Home() {
         "A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...",
     },
    
+    {
+      avatar: "/path/to/avatar1.png",
+      username: "Guiguh01",
+      handle: "dragonBallBalls",
+      content:
+        "Mussum Ipsum, cacilds vidis litro abertis. Manduma pindureta quium dia nois paga...",
+    },
+    {
+      avatar: "/path/to/avatar2.png",
+      username: "Guiguh02",
+      handle: "dragonBallBalls2",
+      content:
+        "Viva Forevis aptent taciti sociosqu ad litora torquent. Mé faiz elementum girarzis...",
+    },
+    {
+      avatar: "/path/to/avatar3.png",
+      username: "Guiguh03",
+      handle: "dragonBallBalls3",
+      content:
+        "A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach... A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach... A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...",
+    },
 
+    {
+      avatar: "/path/to/avatar3.png",
+      username: "Guiguh03",
+      handle: "dragonBallBalls3",
+      content:
+        "A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...",
+    },
+   
 
   ];
 
@@ -76,7 +105,7 @@ export default function Home() {
       </div>
 
       <div className="bg-[#E1F8FF]  max-h-screen py-8">
-      <div className="flex flex-wrap justify-center gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-start gap-1 w-full mx-auto p-5" >
         {posts.map((post, index) => (
           <PostCard
             key={index}
