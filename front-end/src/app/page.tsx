@@ -19,7 +19,40 @@ export default function Home() {
 
   ];
 
+  const posts = [
+    {
+      avatar: "/path/to/avatar1.png",
+      username: "Guiguh01",
+      handle: "dragonBallBalls",
+      content:
+        "Mussum Ipsum, cacilds vidis litro abertis. Manduma pindureta quium dia nois paga...",
+    },
+    {
+      avatar: "/path/to/avatar2.png",
+      username: "Guiguh02",
+      handle: "dragonBallBalls2",
+      content:
+        "Viva Forevis aptent taciti sociosqu ad litora torquent. Mé faiz elementum girarzis...",
+    },
+    {
+      avatar: "/path/to/avatar3.png",
+      username: "Guiguh03",
+      handle: "dragonBallBalls3",
+      content:
+        "A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach... A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach... A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...",
+    },
 
+    {
+      avatar: "/path/to/avatar3.png",
+      username: "Guiguh03",
+      handle: "dragonBallBalls3",
+      content:
+        "A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...",
+    },
+   
+
+
+  ];
 
   return (
 
@@ -42,16 +75,20 @@ export default function Home() {
         <SearchBar items={items} />
       </div>
 
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <PostCard
-          avatar="/avatarpath.png" // Substitua por URL real ou caminho público
-          name="name-path"
-          username="username-path"
-          content={`Mussum Ipsum, cacilds vidis litro abertis. Manduma pindureta quium dia nois paga. Bota 1 metro de cachaçis aí pra viagem!
-        
-Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Viva Forevis aptent taciti sociosqu ad litora torquent. Mé faiz elementum girarzis, nisi eros vermeio. Detraxit consequat et quo num tendi nada. A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach`}
-        />
+      <div className="bg-[#E1F8FF]  max-h-screen py-8">
+      <div className="flex flex-wrap justify-center gap-6 max-w-6xl mx-auto">
+        {posts.map((post, index) => (
+          <PostCard
+            key={index}
+            avatar={post.avatar}
+            username={post.username}
+            handle={post.handle}
+            content={post.content}
+          />
+        ))}
       </div>
+    </div>
+  );
 
       <div>
         <Footer />
