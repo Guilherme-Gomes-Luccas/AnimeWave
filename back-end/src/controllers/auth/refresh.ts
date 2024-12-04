@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { updateUserData, verifyRefreshToken } from 'src/models/userModel';
@@ -6,9 +6,9 @@ import { generateAccessToken } from './config/generateAccessToken';
 
 @Controller('refresh')
 export class RefreshController {
-  @Get()
+  @Post()
   async refresh(@Req() req: Request, @Res() res: Response) {
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.body.refreshToken;
     if (!token) {
       return res.status(401).json({
         message: 'Não autorizado! Token não encontrado',
@@ -30,12 +30,23 @@ export class RefreshController {
     refreshTokenUser.access_token = newAccessToken;
     await updateUserData(refreshTokenUser);
 
-    console.log(newAccessToken);
+    res.cookie('accessToken', newAccessToken, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: false,
+      maxAge: 3600000,
+      path: '/',
+      domain: 'localhost',
+    });
 
-    res.cookie('accessToken', newAccessToken, { path: '/' });
-    res.status(200).json({
+    return res.status(200).json({
       message: 'Token atualizado com sucesso',
       accessToken: newAccessToken,
     });
+  }
+
+  @Get('check-cookie')
+  async checkCookie(@Req() req: Request) {
+    return { accessToken: req.cookies.accessToken || null };
   }
 }

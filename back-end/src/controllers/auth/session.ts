@@ -16,6 +16,8 @@ export class SessionController {
 
     try {
       verify(token, process.env.TOKEN_KEY);
+      console.log(verify(token, process.env.TOKEN_KEY));
+
       return res.status(200).json({ token });
     } catch (error) {
       return res.status(401).json({

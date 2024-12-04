@@ -13,7 +13,7 @@ export const generateRefreshToken = (user: User) => {
     process.env.TOKEN_KEY,
     {
       subject: user.public_id,
-      expiresIn: '4h',
+      expiresIn: '1d',
     },
   );
 

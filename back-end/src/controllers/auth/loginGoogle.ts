@@ -24,8 +24,26 @@ export class LoginGoogleController {
 
     await updateUserData(user);
 
-    res.cookie('accessToken', accessToken);
-    res.cookie('refreshToken', refreshToken);
+    console.log('1: ', accessToken);
+
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: false,
+      maxAge: 3600000,
+      path: '/',
+      domain: 'localhost',
+    });
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: false,
+      maxAge: 3600000,
+      path: '/',
+      domain: 'localhost',
+    });
+
     res.status(200).redirect('http://localhost:3000/');
   }
 }
