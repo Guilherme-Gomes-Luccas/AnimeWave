@@ -11,12 +11,15 @@
   "dependencies": {
     "axios": "^1.7.8",
     "front-end": "file:",
+    "js-cookie": "^3.0.5",
     "next": "15.0.2",
+    "nookies": "^2.5.2",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.17.6",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18",
