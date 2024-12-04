@@ -14,13 +14,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ items }) => {
     );
 
     return (
-        <div className="relative p-6 max-w-lg mx-auto">
+        <div className="relative mx-auto text-black">
             <input
                 type="text"
                 placeholder="Digite o nome de um anime, mangá ou publicação..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="w-full p-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-[947px] h-[40px] flex-shrink-0 rounded-[25px] bg-white shadow-[0px_4px_4px_rgba(0,0,0,0.25)] p-3 text-lg border-none focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
             {query && (
