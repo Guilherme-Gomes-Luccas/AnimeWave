@@ -1,10 +1,13 @@
 import { Controller, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { validateUserToLogin } from 'src/models/schemas/userSchema';
-import { getUserByEmail } from 'src/models/userModel';
+import { getUserByEmail, updateUserData } from 'src/models/userModel';
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../../config';
+import { generateAccessToken } from './config/generateAccessToken';
+import { generateRefreshToken } from './config/generateRefreshToken';
+import { User } from 'src/models/userInterface';
 
 @Controller('login')
 export class LoginUser {
@@ -22,11 +25,25 @@ export class LoginUser {
       }
 
       //Buscar user pelo email
-      const user = await getUserByEmail(loginValidated.data.email);
-      if (!user) {
+      const response = await getUserByEmail(loginValidated.data.email);
+
+      if (!response) {
         return res.status(400).json({
           error: 'Email ou senha inválida! (email não encontrado)',
         });
+      }
+
+      const accessToken = generateAccessToken(response);
+      const refreshToken = generateRefreshToken(response);
+
+      const user: User = {
+        email: response.email,
+        name: response.name,
+        password: response.password,
+        public_id: response.public_id,
+        photo: response.photo,
+        access_token: accessToken,
+        refresh_token: refreshToken
       }
 
       //Comparar a senha enviada com o hash armazenado
@@ -41,17 +58,38 @@ export class LoginUser {
         });
       }
 
-      const token = jwt.sign(
-        { name: user.name, publicID: user.public_id },
-        SECRET_KEY,
-        { expiresIn: 60 * 5 },
-      );
+      console.log(accessToken)
+      console.log(refreshToken)
 
-      console.log(token);
-      return res.json({ token });
+      await updateUserData(user);
+
+      res.cookie('accessToken', accessToken, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false,
+        maxAge: 3600000,
+        path: '/',
+        domain: 'localhost',
+      });
+  
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false,
+        maxAge: 3600000,
+        path: '/',
+        domain: 'localhost',
+      });
+
+      return res.status(200).json({
+        refreshToken,
+        accessToken
+      })
     } catch (error) {
       if (error.code === 'P2002') {
         res.status(400).json({ error: 'ERRO' });
+      } else {
+        res.status(400).json({error})
       }
     }
   }

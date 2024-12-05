@@ -7,13 +7,15 @@ datasource db {
 }
 
 model users {
-  id           Int    @default(autoincrement())
-  public_id    String @id @db.VarChar(255)
-  name         String @db.VarChar(100)
-  email        String @unique @db.VarChar(200)
-  password     String @db.VarChar(255)
+  id            Int    @default(autoincrement())
+  public_id     String @id @db.VarChar(255)
+  name          String @db.VarChar(100)
+  email         String @unique @db.VarChar(200)
+  password      String @db.VarChar(255)
 
-  access_token String? @db.VarChar(255)
-  description  String?
-  photo        String? @db.VarChar(255)
+  access_token  String? @db.VarChar(255)
+  refresh_token String? @db.Text()
+
+  description   String?
+  photo         String? @db.VarChar(255)
 }
