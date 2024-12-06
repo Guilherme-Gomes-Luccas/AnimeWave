@@ -52,6 +52,8 @@ export class LoginUser {
     } catch (error) {
       if (error.code === 'P2002') {
         res.status(400).json({ error: 'ERRO' });
+      } else {
+        res.status(400).json({ error: error})
       }
     }
   }

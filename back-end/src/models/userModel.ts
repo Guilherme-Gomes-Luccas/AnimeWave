@@ -75,7 +75,6 @@ export const verifyRefreshToken = async (
 export const getAll = async () => {
   const users = await prisma.user.findMany({
     select: {
-      id: true,
       public_id: true,
       name: true,
       email: true,
@@ -84,13 +83,12 @@ export const getAll = async () => {
   return users;
 };
 
-export const getById = async (id: number) => {
+export const getById = async (public_id: string) => {
   const user = await prisma.user.findUnique({
     where: {
-      id,
+      public_id,
     },
     select: {
-      id: true,
       public_id: true,
       name: true,
       email: true,
@@ -104,7 +102,6 @@ export const create = async (user) => {
   const result = await prisma.user.create({
     data: user,
     select: {
-      id: true,
       public_id: true,
       name: true,
       email: true,
@@ -114,13 +111,12 @@ export const create = async (user) => {
   return result;
 };
 
-export const remove = async (id) => {
+export const remove = async (public_id: string) => {
   const user = await prisma.user.delete({
     where: {
-      id,
+      public_id,
     },
     select: {
-      id: true,
       public_id: true,
       name: true,
       email: true,
@@ -133,11 +129,10 @@ export const remove = async (id) => {
 export const update = async (user) => {
   const result = await prisma.user.update({
     where: {
-      id: user.id,
+      public_id: user.public_id,
     },
     data: user,
     select: {
-      id: true,
       public_id: true,
       name: true,
       email: true,
