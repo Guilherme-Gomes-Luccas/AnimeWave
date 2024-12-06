@@ -64,6 +64,7 @@ export const verifyRefreshToken = async (
       name: true,
       email: true,
       password: true,
+      photo: true,
       public_id: true,
       access_token: true,
     },

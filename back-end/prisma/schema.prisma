@@ -8,7 +8,7 @@ datasource db {
 }
 
 model user {
-  public_id    String  @id @db.VarChar(255)
+  public_id    String  @id @default(uuid())
   name         String  @db.VarChar(100)
   email        String  @unique @db.VarChar(200)
   password     String  @db.VarChar(255)
@@ -17,4 +17,14 @@ model user {
   description  String?
   photo        String? @db.VarChar(255)
   id           Int     @default(autoincrement()) @unique()
+
+  posts       post[]
+}
+
+model post {
+  public_id   String  @id @default(uuid())
+  id_user     String  @db.Text()
+  name        String  @db.VarChar(255)
+
+  user        user    @relation(fields: [id_user], references: [public_id])
 }

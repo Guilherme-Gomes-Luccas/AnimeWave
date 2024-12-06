@@ -7,6 +7,7 @@ import { LoginGoogleController } from './controllers/auth/loginGoogle';
 import { LoginUser } from './controllers/auth/login';
 import { SessionController } from './controllers/auth/session';
 import { RefreshController } from './controllers/auth/refresh';
+import { GetUserDataController } from './controllers/user/getUserData';
 
 @Module({
   imports: [],
@@ -17,6 +18,7 @@ import { RefreshController } from './controllers/auth/refresh';
     LoginUser,
     SessionController,
     RefreshController,
+    GetUserDataController,
   ],
   providers: [AppService, GoogleStrategy],
 })

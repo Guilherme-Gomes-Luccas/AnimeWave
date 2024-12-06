@@ -24,8 +24,6 @@ export class LoginGoogleController {
 
     await updateUserData(user);
 
-    console.log('1: ', accessToken);
-
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
       sameSite: 'lax',
@@ -44,6 +42,6 @@ export class LoginGoogleController {
       domain: 'localhost',
     });
 
-    res.status(200).redirect('http://localhost:3000/');
+    res.status(200).redirect('http://localhost:3000/home');
   }
 }

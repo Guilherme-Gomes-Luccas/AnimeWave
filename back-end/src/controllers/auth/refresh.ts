@@ -17,6 +17,12 @@ export class RefreshController {
 
     const public_id = verify(token, process.env.TOKEN_KEY).sub;
 
+    if (!public_id) {
+      return res.status(401).json({
+        message: ' Não autorizado! Token inválido',
+      });
+    }
+
     const refreshTokenUser = await verifyRefreshToken(token, <string>public_id);
 
     if (!refreshTokenUser) {
