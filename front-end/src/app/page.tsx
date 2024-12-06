@@ -1,17 +1,16 @@
 import Image from "next/image";
-import SideBar from "./components/SideBar";
-import PostBar from "./components/PostBar";
+import SideBar from "./components/Sidebar";
+import PostBar from "./components/Post";
+import Post from "./components/Post";
 
 export default function Home() {
   return (
-    <div className="flex ">
-      <div className="">
-        <SideBar />
-      </div>
+    <div className="flex h-screen bg-gray-100">
+      <SideBar />
 
-      <div>
-        <PostBar />
-      </div>
+      <main className="flex-1 p-6">
+        <Post />
+      </main>
     </div>
 
   );
