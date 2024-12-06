@@ -51,7 +51,7 @@ export default function Login() {
       <div className="mt-20 flex flex-col items-center justify-center">
         <Image src={'/img/logov4.svg'} width={640} height={640} alt="logo-animeWave" className="ml-32" />
         <div className="bg-white rounded-3xl shadow-2xl w-3/12 h-96 flex flex-col items-center">
-          <h1 className="pt-2 text-3xl self-start pl-6">Login</h1>
+          <h1 className={`${kanit.className} pt-2 text-3xl self-start pl-6 text-black`}>Login</h1>
           <form action="" className="flex flex-col w-full" onSubmit={handleSubmit}>
             <div className="w-full">
               <Input label="Email" placeholder="Digite seu Email" type="email" onChange={(e) => setEmail(e.target.value)} />
