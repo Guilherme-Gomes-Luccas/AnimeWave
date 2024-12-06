@@ -1,3 +1,4 @@
+
 import { PrismaClient } from '@prisma/client';
 import { User } from './userInterface';
 
@@ -84,8 +85,10 @@ export const getAll = async () => {
 };
 
 export const getById = async (public_id: string) => {
+export const getById = async (public_id: string) => {
   const user = await prisma.user.findUnique({
     where: {
+      public_id,
       public_id,
     },
     select: {
@@ -115,6 +118,7 @@ export const remove = async (public_id: string) => {
   const user = await prisma.user.delete({
     where: {
       public_id,
+      public_id,
     },
     select: {
       public_id: true,
@@ -129,6 +133,7 @@ export const remove = async (public_id: string) => {
 export const update = async (user) => {
   const result = await prisma.user.update({
     where: {
+      public_id: user.public_id,
       public_id: user.public_id,
     },
     data: user,

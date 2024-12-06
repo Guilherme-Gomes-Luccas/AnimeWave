@@ -23,6 +23,7 @@
     "front-end": "file:",
     "js-cookie": "^3.0.5",
     "next": "15.0.2",
+    "next-client-cookies": "^2.0.0",
     "nookies": "^2.5.2",
     "postcss": "^8",
     "react": "19.0.0-rc-02c0e824-20241028",
