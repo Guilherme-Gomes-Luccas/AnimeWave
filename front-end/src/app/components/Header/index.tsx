@@ -1,12 +1,30 @@
-import React from "react";
+'use client'
+
+import React, { useState } from "react";
 import Image from "next/image";
 import logo from "./logo.svg";
 import "./style.css"
+import { Kanit } from "next/font/google";
 import Link from "next/link";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import { SidebarProps } from "@/components/Sidebar/Sidebar";
 
-export default function Header() {
+const kanit = Kanit({
+	weight: '400',
+	subsets: ['latin']
+});
+
+
+
+export default function Header({username, photo}: SidebarProps) {
+    const [ sideBar, setSideBar ] = useState(false);
+
+    const showSideBar = () => {
+        setSideBar(!sideBar);
+    }
+
     return (
-        <div className='flex justify-between bg-header-blue w-full h-24 bg-blue-950 '>
+        <div className='flex justify-between items-start bg-header-blue w-full h-24 bg-blue-950 fixed'>
           
             <Image
                 className="mt-2"
@@ -15,10 +33,8 @@ export default function Header() {
                 height={300}
                 alt="logo-animeWave"
             />
-            <div className="flex justify-center self-center  px-28 font-kanit text-xl ">
-                {/* <Link href={""} className="text-white px-4 mx-14   "> Cadastro</Link> */}
-                {/* <Link href={""} className="text-white px-4"> Login</Link> */}
-            </div>
+            
+            <Sidebar username={username} photo={photo} />
         </div>
     )
 };

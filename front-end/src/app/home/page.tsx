@@ -10,23 +10,39 @@ import axios from "axios";
 import { session } from "../api/auth/session";
 import Footer from "../components/Footer";
 import PostCard from "../components/PostCard";
+import Cookies from "js-cookie";
 
-const getSession = async () => {
+export default async function Home() {
   const cookieStore = await cookies();
   let accessToken = cookieStore.get('accessToken');
   const refreshToken = cookieStore.get('refreshToken');
+  const getSession = async () => {
+    console.log('1: ', accessToken);
+    accessToken = await session(accessToken?.value, refreshToken?.value);
+    console.log('2: ', accessToken);
+    return accessToken;
+  }
+  
+  const getUserData = async (accessToken: string) => {
+    console.log('token: ', accessToken);
 
-  //const accessToken = Cookie.get('accessToken');
-  //const refreshToken = Cookie.get('refreshToken');
-  console.log('1: ', accessToken);
-
-  accessToken = await session(accessToken?.value, refreshToken?.value);
-  console.log('2: ', accessToken);
-}
-
-export default async function Home() {
-  await getSession();
-
+    try {
+      const response = await fetch('http://localhost:3001/get-user', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+  
+      const user = await response.json();
+  
+      return user;
+  
+    } catch (error) {
+      
+    }
+  }
+  
   const items = [
     'Dragon Ball Balls',
     'Gintama',
@@ -100,12 +116,20 @@ export default async function Home() {
    
 
   ];
+  
+  const token = await getSession();
+  const userData = await getUserData(`${token}`);
+
+  console.log('user: ',userData.user)
 
   return (
 
     <div className="flex flex-col">
 
-      <Header />
+      <Header 
+        username={userData.user.name}
+        photo={userData.user.photo}
+      />
 
       <div className=" w-full h-fullmax-h-24">
         <Image
