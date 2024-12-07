@@ -134,26 +134,21 @@ export default async function Home() {
       </div>
 
       <div className="bg-[#E1F8FF]  max-h-screen py-8">
-      <div className="grid grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-start gap-1 w-full mx-auto p-5" >
-        {posts.map((post, index) => (
-          <PostCard
-            key={index}
-            avatar={post.avatar}
-            username={post.username}
-            handle={post.handle}
-            content={post.content}
-          />
-        ))}
-      </div>
-    </div>
-  );
-
-      <div>
-        <Footer />
+        <div className="grid grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-start gap-1 w-full mx-auto p-5" >
+          {posts.map((post, index) => (
+            <PostCard
+              key={index}
+              avatar={post.avatar}
+              username={post.username}
+              handle={post.handle}
+              content={post.content}
+            />
+          ))}
+        </div>
       </div>
 
-
+      <Footer />
+    
     </div>
-
   );
 }
