@@ -7,7 +7,6 @@ import { createPost } from "src/models/postModel";
 @Controller('novo-post')
 export class CreatePostController {
     @Post()
-
     async create(@Req() req: Request, @Res() res: Response) {
         try {
             const { id_user, title, content, photo } = req.body;
@@ -21,7 +20,7 @@ export class CreatePostController {
             }
 
             const post = await createPost({
-                id_user: validatedPost.data.user_id,
+                id_user: validatedPost.data.id_user,
                 title: validatedPost.data.title,
                 content: validatedPost.data.content,
                 photo: validatedPost.data.photo
@@ -38,7 +37,7 @@ export class CreatePostController {
                     error: [{ message: 'Erro P2002' }],
                 });
             } else {
-                res.status(400).json({error: "Erro"})
+                res.status(400).json({error: error})
             }
         }
     }
