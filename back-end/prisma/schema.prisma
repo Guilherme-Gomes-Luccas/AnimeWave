@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  //Indetificador
+  public_id    String  @id @default(uuid())
+
+  //Informações do usuário
+  name         String  @db.VarChar(100)
+  email        String  @unique @db.VarChar(200)
+  password     String  @db.VarChar(255)
+  photo        String? @db.VarChar(255)
+  
+  //Tokens de sessão do usuário
+  access_token String? @db.Text()
+  refresh_token String? @db.Text()
+
+  //Conexão com os posts
+  posts       post[]
+}
+
+model post {
+  //Identificadores
+  public_id   String  @id @default(uuid())
+  id_user     String  @db.VarChar(255)
+
+  //Conteúdo
+  title       String  @db.VarChar(255)
+  content     String  @db.Text()
+  photo       String  @db.VarChar(255) 
+
+  //Conexão com o usuário
+  user        user    @relation(fields: [id_user], references: [public_id])
+}
