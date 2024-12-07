@@ -3,64 +3,26 @@ generator client {
 }
 
 datasource db {
-<<<<<<< HEAD
-  provider = "mysql"
-=======
   provider = "postgresql"
->>>>>>> posts
   url      = env("DATABASE_URL")
 }
 
-model user {
-<<<<<<< HEAD
-  public_id    String  @id @default(uuid())
-  name         String  @db.VarChar(100)
-  email        String  @unique @db.VarChar(200)
-  password     String  @db.VarChar(255)
-  
-  access_token String? @db.Text()
-  refresh_token String? @db.Text()
-
-  description  String?
-  photo        String? @db.VarChar(255)
-  id           Int     @default(autoincrement()) @unique()
-
-=======
-  //Indetificador
-  public_id    String  @id @default(uuid())
-
-  //Informações do usuário
-  name         String  @db.VarChar(100)
-  email        String  @unique @db.VarChar(200)
-  password     String  @db.VarChar(255)
-  photo        String? @db.VarChar(255)
-  
-  //Tokens de sessão do usuário
-  access_token String? @db.Text()
-  refresh_token String? @db.Text()
-
-  //Conexão com os posts
->>>>>>> posts
-  posts       post[]
+model post {
+  public_id String @id
+  id_user   String @db.VarChar(255)
+  title     String @db.VarChar(255)
+  content   String
+  photo     String @db.VarChar(255)
+  user      user   @relation(fields: [id_user], references: [public_id])
 }
 
-model post {
-<<<<<<< HEAD
-  public_id   String  @id @default(uuid())
-  id_user     String  @db.Text()
-  name        String  @db.VarChar(255)
-
-=======
-  //Identificadores
-  public_id   String  @id @default(uuid())
-  id_user     String  @db.VarChar(255)
-
-  //Conteúdo
-  title       String  @db.VarChar(255)
-  content     String  @db.Text()
-  photo       String  @db.VarChar(255) 
-
-  //Conexão com o usuário
->>>>>>> posts
-  user        user    @relation(fields: [id_user], references: [public_id])
+model user {
+  public_id     String  @id
+  name          String  @db.VarChar(100)
+  email         String  @unique @db.VarChar(200)
+  password      String  @db.VarChar(255)
+  access_token  String?
+  photo         String? @db.VarChar(255)
+  refresh_token String?
+  post          post[]
 }
