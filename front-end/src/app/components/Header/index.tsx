@@ -24,7 +24,7 @@ export default function Header({username, photo}: SidebarProps) {
     }
 
     return (
-        <div className='flex justify-between items-start bg-header-blue w-full h-24 bg-blue-950 fixed'>
+        <div className='flex justify-between items-start bg-header-blue w-full h-24 bg-blue-950 fixed top-0 z-50'>
           
             <Image
                 className="mt-2"
