@@ -30,4 +30,8 @@ model User {
   access_token  String?  @db.VarChar(255) 
   foto          String?  @db.VarChar(255)
   description   String?  @db.Text()
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> posts

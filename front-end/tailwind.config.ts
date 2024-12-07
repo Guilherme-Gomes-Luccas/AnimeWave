@@ -14,6 +14,10 @@ const config: Config = {
       },
       fontFamily: {
         kanit: ["Kanit", "sans-serif"],
+<<<<<<< HEAD
+=======
+        poppins: ["Poppins", "sans-serif"],
+>>>>>>> posts
       },
     },
   },

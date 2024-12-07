@@ -22,6 +22,7 @@ interface Error {
 	message: string;
 	path: Array<string>;
 }
+
 export default function Cadastro() {
 	const [ name, setName ] = useState("");
 	const [ email, setEmail ] = useState("");
@@ -81,14 +82,9 @@ export default function Cadastro() {
 	};
 
 	const handleGoogleSubmit = async () => {
-		/*const response = await fetch('https://api-animewave-3el0.onrender.com/auth/google/login', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})*/
 		window.location.href = "http://localhost:3001/auth/google/login";
 	}
+
 	return (
 		<>
 			<GoBack />
@@ -214,3 +210,4 @@ export default function Cadastro() {
 
 	);
 }
+

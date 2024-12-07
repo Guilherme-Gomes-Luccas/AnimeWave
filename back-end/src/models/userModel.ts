@@ -98,7 +98,7 @@ export const getById = async (public_id: string) => {
   return user;
 };
 
-export const create = async (user) => {
+export const create = async (user: User) => {
   const result = await prisma.user.create({
     data: user,
     select: {
@@ -126,7 +126,7 @@ export const remove = async (public_id: string) => {
   return user;
 };
 
-export const update = async (user) => {
+export const update = async (user: User) => {
   const result = await prisma.user.update({
     where: {
       public_id: user.public_id,
