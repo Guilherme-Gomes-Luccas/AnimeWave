@@ -22,7 +22,6 @@ interface Error {
 	message: string;
 	path: Array<string>;
 }
-
 export default function Cadastro() {
 	const [ name, setName ] = useState("");
 	const [ email, setEmail ] = useState("");
