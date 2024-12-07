@@ -16,14 +16,15 @@ export default function Post() {
                 </div>
             </div>
             <h2 className="text-lg font-semibold text-gray-700">
-        This anime smells like a bus driver after a long day...
-      </h2>
+                This anime smells like a bus driver after a long day...
+            </h2>
+            
 
-      <img
-        src="https://via.placeholder.com/400x200"
-        alt="Post Image"
-        className="w-full rounded-md"
-      />
+            <img
+                src="https://via.placeholder.com/400x200"
+                alt="Post Image"
+                className="w-full rounded-md"
+            />
 
 
             <p className="text-gray-600 leading-relaxed">
