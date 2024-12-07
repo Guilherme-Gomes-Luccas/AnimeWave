@@ -38,7 +38,7 @@ const userSchema = z.object({
     .max(256, { message: 'A senha deve ter no maximo 256 caracteres' }),
 });
 
-export const validateUser = (user) => {
+export const validateUser = (user: User) => {
   return userSchema.safeParse(user);
 };
 

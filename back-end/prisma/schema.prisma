@@ -8,7 +8,7 @@ datasource db {
 }
 
 model post {
-  public_id String @id
+  public_id String @id @default(uuid())
   id_user   String @db.VarChar(255)
   title     String @db.VarChar(255)
   content   String
@@ -17,7 +17,7 @@ model post {
 }
 
 model user {
-  public_id     String  @id
+  public_id     String  @id @default(uuid())
   name          String  @db.VarChar(100)
   email         String  @unique @db.VarChar(200)
   password      String  @db.VarChar(255)
