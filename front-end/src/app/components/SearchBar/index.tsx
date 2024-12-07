@@ -15,8 +15,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ items }) => {
     );
 
     return (
-        <div className="text-black ">
-            <div className='flex w-[1000px] h-[45px] items-center '>
+        <div className="text-black flex flex-col h-fit w-[917px]">
+            <div className='flex w-[917px] h-[42px] items-center'>
                 <input
                     type="text"
                     placeholder="Digite o nome de um anime, mangá ou publicação..."
@@ -35,12 +35,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ items }) => {
             </div>
 
             {query && (
-                <ul className="absolute left-0 right-0 mt-2 bg-white shadow-md rounded-lg max-h-60 overflow-y-auto z-50">
+                <ul className="left-0 right-0 bg-white rounded-lg max-h-64 overflow-y-auto w-full flex flex-col items-center">
                     {filteredItems.length > 0 ? (
                         filteredItems.map((item, index) => (
                             <li
                                 key={index}
-                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer transition duration-200"
+                                className="px-4 py-2 w-full hover:bg-red-100 cursor-pointer transition duration-200"
                             >
                                 {item}
                             </li>
