@@ -6,7 +6,7 @@ const userSchema = z.object({
     required_error: 'O ID público é obrigatório',
     invalid_type_error: 'O ID público deve ser uma string',
   }),
-  user_id: z.string({
+  id_user: z.string({
     required_error: 'O ID público é obrigatório',
     invalid_type_error: 'O ID público deve ser uma string',
   }),
@@ -23,7 +23,6 @@ const userSchema = z.object({
       required_error: 'O conteúdo é obrigatório',
       invalid_type_error: 'O conteúdo deve ser uma string',
     })
-    .email({ message: 'O conteúdo deve ser válido' })
     .max(500, { message: 'O conteúdo deve ter no máximo 500 caracteres' }),
 
   photo: z
