@@ -1,36 +1,46 @@
 import Image from "next/image";
+import { Kanit } from "next/font/google";
 
+const kanit = Kanit({
+	weight: '400',
+	subsets: ['latin']
+});
 
-interface PostCardProps {
+export interface PostCardProps {
     avatar: string;
-    handle: string;
     username: string;
     content: string;
+    hashtags?: string[];
 }
 
-const PostCard: React.FC<PostCardProps> = ({ avatar, username, handle, content }) => {
+const PostCard: React.FC<PostCardProps> = ({ avatar, username, content, hashtags }) => {
     return (
         <div className="flex bg-white rounded-lg shadow-md p-4 mb-4 w-full max-w-md mx-auto">
             <div className="w-12 h-12 flex-shrink-0">
                 <Image
-                    src={avatar}
+                    src={avatar || '/img/avatar-black.svg'}
                     alt={`${username}'s avatar`}
                     width={48}
                     height={48}
                     className="rounded-full"
                 />
                 </div>
-
-
                      
       <div className="ml-4">
        
         <div className="flex items-center space-x-2">
-          <h3 className="font-semibold">{username}</h3>
-          <span className="text-gray-500 text-sm">@{handle}</span>
+          <h3 className={`font-semibold text-black ${kanit.className}`}>{username}</h3>
         </div>
        
-        <p className="text-gray-700 mt-2 text-sm">{content}</p>
+        <p className="text-gray-700 mt-2 text-sm mb-4">{content}</p>
+        {hashtags && (
+          <div className="flex gap-3">
+            {hashtags.map((hashtag, index) => (
+              <p key={index} className="text-black font-bold text-sm">{hashtag}</p>
+            ))}
+        
+          </div>
+        )}
       </div>
     </div>
   );

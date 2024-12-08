@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { Kanit } from "next/font/google";
-import { url } from "inspector";
 
 const kanit = Kanit({
 	weight: '400',

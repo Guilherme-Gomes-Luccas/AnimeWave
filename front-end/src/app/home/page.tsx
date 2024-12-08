@@ -5,13 +5,26 @@ import SearchBar from "../components/SearchBar";
 import { cookies } from "next/headers";
 import { session } from "../api/auth/session";
 import Footer from "../components/Footer";
-import PostCard from "../components/PostCard";
+import PostCard, { PostCardProps } from "../components/PostCard";
 import Slider from "@/components/Slider/Slider";
+import Post from "../components/Post";
+import Search from "../components/Search";
+
+export interface Post {
+  public_id: string,
+  id_user: string,
+  user_photo: string,
+  username: string,
+  hashtags: Array<string>,
+  content: string,
+  photo: string
+}
 
 export default async function Home() {
   const cookieStore = await cookies();
   let accessToken = cookieStore.get('accessToken');
   const refreshToken = cookieStore.get('refreshToken');
+  const posts = Array<PostCardProps>();
   const getSession = async () => {
     console.log('1: ', accessToken);
     accessToken = await session(accessToken?.value, refreshToken?.value);
@@ -20,8 +33,6 @@ export default async function Home() {
   }
   
   const getUserData = async (accessToken: string) => {
-    console.log('token: ', accessToken);
-
     try {
       const response = await fetch('http://localhost:3001/get-user', {
         method: 'GET',
@@ -38,83 +49,36 @@ export default async function Home() {
       
     }
   }
-  
-  const items = [
-    'Dragon Ball Balls',
-    'Gintama',
-    'One Piece',
-    'Naruto',
-    'Solo Levening',
-    'Melhor anime de Fotboll',
-    'Pokemon',
-  ];
 
-  const posts = [
-    {
-      avatar: "/path/to/avatar1.png",
-      username: "Guiguh01",
-      handle: "dragonBallBalls",
-      content:
-        "Mussum Ipsum, cacilds vidis litro abertis. Manduma pindureta quium dia nois paga...",
-    },
-    {
-      avatar: "/path/to/avatar2.png",
-      username: "Guiguh02",
-      handle: "dragonBallBalls2",
-      content:
-        "Viva Forevis aptent taciti sociosqu ad litora torquent. Mé faiz elementum girarzis...",
-    },
-    {
-      avatar: "/path/to/avatar3.png",
-      username: "Guiguh03",
-      handle: "dragonBallBalls3",
-      content:
-        "A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach... A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach... A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...",
-    },
+  const getPosts = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/get-posts', {
+        method: 'GET'
+      });
 
-    {
-      avatar: "/path/to/avatar3.png",
-      username: "Guiguh03",
-      handle: "dragonBallBalls3",
-      content:
-        "A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...",
-    },
-   
-    {
-      avatar: "/path/to/avatar1.png",
-      username: "Guiguh01",
-      handle: "dragonBallBalls",
-      content:
-        "Mussum Ipsum, cacilds vidis litro abertis. Manduma pindureta quium dia nois paga...",
-    },
-    {
-      avatar: "/path/to/avatar2.png",
-      username: "Guiguh02",
-      handle: "dragonBallBalls2",
-      content:
-        "Viva Forevis aptent taciti sociosqu ad litora torquent. Mé faiz elementum girarzis...",
-    },
-    {
-      avatar: "/path/to/avatar3.png",
-      username: "Guiguh03",
-      handle: "dragonBallBalls3",
-      content:
-        "A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach... A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach... A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...",
-    },
+      const postData = await response.json();
 
-    {
-      avatar: "/path/to/avatar3.png",
-      username: "Guiguh03",
-      handle: "dragonBallBalls3",
-      content:
-        "A ordem dos tratores não altera o pão duris. Tá deprimidis, eu conheço uma cach...",
-    },
-   
+      postData.map((post: Post) => {
+        posts.push({
+          avatar: post.user_photo,
+          username: post.username,
+          content: post.content,
+          hashtags: post.hashtags
+        })
+      });
 
-  ];
-  
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const token = await getSession();
   const userData = await getUserData(`${token}`);
+
+  await getPosts();
+  
+  const postsHashtags = posts.map((post) => post.hashtags);
+  const items = Array.from(new Set(postsHashtags.flat()));
 
   return (
 
@@ -129,24 +93,7 @@ export default async function Home() {
         <Slider />
       </div> 
 
-      <div className=" bg-[#E1F8FF] flex flex-row  items-start justify-center pt-8">
-        <SearchBar items={items} />
-      </div>
-
-      <div className="bg-[#E1F8FF]  max-h-screen py-8">
-        <div className="grid grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-start gap-1 w-full mx-auto p-5" >
-          {posts.map((post, index) => (
-            <PostCard
-              key={index}
-              avatar={post.avatar}
-              username={post.username}
-              handle={post.handle}
-              content={post.content}
-            />
-          ))}
-        </div>
-      </div>
-
+      <Search items={items} posts={posts} />
       <Footer />
     
     </div>

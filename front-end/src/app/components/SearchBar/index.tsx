@@ -2,17 +2,25 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import './style.css'
+import { on } from 'events';
 
 type SearchBarProps = {
-    items: string[];
+    items: Array<string | undefined>;
+    onSearch: (query: string) => void;
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({ items }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ items, onSearch}) => {
     const [query, setQuery] = useState('');
 
     const filteredItems = items.filter((item) =>
-        item.toLowerCase().includes(query.toLowerCase())
+        item?.toLowerCase().includes(query.toLowerCase())
     );
+
+    const cleanSearch = (search: string) => {
+        onSearch(search);
+        setQuery('');
+    }
 
     return (
         <div className="text-black flex flex-col h-fit w-[917px]">
@@ -31,16 +39,18 @@ const SearchBar: React.FC<SearchBarProps> = ({ items }) => {
                     height={30}
                     alt='search'
                     className='absolute ml-[870px] cursor-pointer'
+                    onClick={() => cleanSearch(query)}
                 />
             </div>
 
             {query && (
-                <ul className="left-0 right-0 bg-white rounded-lg max-h-64 overflow-y-auto w-full flex flex-col items-center">
+                <ul className="mt-0 left-0 right-0 bg-white rounded-lg max-h-64 overflow-y-auto w-full flex flex-col items-center">
                     {filteredItems.length > 0 ? (
                         filteredItems.map((item, index) => (
                             <li
                                 key={index}
-                                className="px-4 py-2 w-full hover:bg-red-100 cursor-pointer transition duration-200"
+                                className="px-4 py-2 w-full hover:bg-gray-100 cursor-pointer transition duration-200"
+                                onClick={() => cleanSearch(item || '')}
                             >
                                 {item}
                             </li>

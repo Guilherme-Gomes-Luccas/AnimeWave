@@ -14,8 +14,6 @@ const kanit = Kanit({
 	subsets: ['latin']
 });
 
-
-
 export default function Header({username, photo}: SidebarProps) {
     const [ sideBar, setSideBar ] = useState(false);
 
