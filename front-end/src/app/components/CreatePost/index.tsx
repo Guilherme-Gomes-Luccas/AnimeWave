@@ -1,69 +1,84 @@
 
-import Image from "next/image"
+import Image from "next/image";
+import imgPost from "./ImagePost.svg";
+import { IoMdReturnLeft } from "react-icons/io";
+import Link from "next/link";
 
 
-    interface PostCardProps {
-        avatar: string;
-        handle: string;
-        username: string;
-        content: string;
-    }
-    
 
-const CreatePost:React.FC<PostCardProps> = ({ avatar, handle, username, content }) => {
+interface PostCardProps {
+    avatar: string;
+    handle: string;
+    username: string;
+    content: string;
+    title: string;
+}
+
+
+const CreatePost: React.FC<PostCardProps> = ({ avatar, handle, username, content, title }) => {
     return (
 
 
-        <div className="bg-white shadow-md rounded-lg p-6 space-y-4">
+        <div className="bg-white shadow-md rounded-lg p-6 space-y-4 mb-3">
 
-<div className="flex items-center space-x-2">
-          <h3 className="font-semibold">{username}</h3>
-          <span className="text-gray-500 text-sm">@{handle}</span>
-        </div>
+            <div className="flex items-center space-x-4 text-black font-bold ">
+                <IoMdReturnLeft
+                    className="text-black size-8"
+                />
+                <Link href={"retornar para home"}>Home</Link>
+            </div>
 
-        <div className="w-12 h-12 flex-shrink-0">
-                <Image
+
+            <div className="flex items-center space-x-4 ">
+
+                <img
                     src={avatar}
                     alt={`${username}'s avatar`}
                     width={48}
                     height={48}
-                    className="rounded-full"
+                    className="rounded-full w-10 h-10 "
                 />
+
+                <div >
+                    <p className="font-bold text-gray-800">{username}</p>
+                    <p className="text-gray-500 text-sm">@{handle}</p>
+
                 </div>
 
-            <div className="flex items-center space-x-4">
-                <img
-                    src="https://via.placeholder.com/40"
-                    alt="Avatar"
-                    className="w-10 h-10 rounded-full"
-                />
+            </div>
 
 
-                <div>
-                    <p className="font-bold text-gray-800">Username</p>
-                    <p className="text-sm text-gray-500">@xxx</p>
+
+
+            <div className=" rounded-md p-4 mb-4   ">
+
+                <div className="flex justify-center items-center">
+                    <div className=" inline-flex justify-center items-center mb-2  bg-gray-300 rounded-md text-black px-4 py-2">
+                        <h2 className="text-lg font-bold text-black ">{title}</h2>
+                    </div>
+                </div>
+
+                <div className="flex justify-center items-center mt-5" >
+                    <Image
+                        src={imgPost}
+                        width={400}
+                        height={200}
+                        alt="Foto do Post"
+                    />
+                </div>
+
+
+
+
+
+            </div>
+            <div className="flex justify-center items-center">
+                <div className=" inline-flex justify-center items-center mb-2  bg-gray-300 rounded-md text-black px-4 py-2">
+                    <p className="text-black p-2 ">{content}</p>
                 </div>
             </div>
-            <h2 className="text-lg font-semibold text-gray-700">
-                This anime smells like a bus driver after a long day...
-            </h2>
-            
-            <Image
-                src={""}
-                width={400}
-                height={200}
-                alt="Foto do Post"
-            />
-            
-
-            
 
 
-            <p className="text-gray-600 leading-relaxed">
-                Mussum Ipsum, cacilds vidis litro abertis.  Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Viva Forevis aptent taciti sociosqu ad litora torquent. Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!
-                Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! A ordem dos tratores não altera o pão duris. Aenean aliquam molestie leo, vitae iaculis nisl.
-                Eu nunca mais boto a boca num copo de cachaça, agora eu só uso canudis! Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Aenean aliquam molestie leo, vitae iaculis nisl. Atirei o pau no gatis, per gatis num morreus.
-            </p>
         </div>
     )
 }

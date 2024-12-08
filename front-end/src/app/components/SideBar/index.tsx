@@ -1,10 +1,15 @@
 
 "use client"
-
+import Link from "next/link";
 import logo from "./logo.svg";
 import Image from "next/image";
-import { HomeIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
+
+import { MdOutlineYoutubeSearchedFor, MdHome } from "react-icons/md";
+import { IoMdNotifications } from "react-icons/io";
+import { FaEnvelope,FaUser  } from "react-icons/fa";
+import { GiExitDoor } from "react-icons/gi";
+
 
 
 
@@ -43,7 +48,7 @@ export default function Sidebar() {
 
     return (
 
-        <div className="w-64 p-4 bg-gray-300 shadow-sm flex flex-col">
+        <div className="w-[25%] p-4 bg-gray-300 shadow-sm flex flex-col">
             <Image
                 className="mt-2"
                 src={logo}
@@ -55,22 +60,47 @@ export default function Sidebar() {
             <div className="flex-1">
 
 
-                <ul className="space-y-2 p-4 text-black font-poppins mt-12">
+                <ul className="flex flex-col space-y-2 p-4 text-black font-poppins mt-12">
+
+                    <div className="flex flex-row">
+                        <MdHome className="size-9 mb-2 " />
+                        <Link className="font-semibold hover:text-yellow-500 ml-3 mb-1 mt-3" href="/Home">Home</Link>
+                    </div>
 
 
-                    <HomeIcon className="size-9" />
-                    <li className=" font-semibold  hover:text-yellow-500 mt-12">Home</li>
-                    <li className="font-semibold  hover:text-yellow-500 mt-12">Pesquisar</li>
-                    <li className="font-semibold  hover:text-yellow-500 mt-12">Notificações</li>
-                    <li className="font-semibold  hover:text-yellow-500 mt-12">Mensagens</li>
-                    <li className="font-semibold  hover:text-yellow-500">Perfil</li>
+                    <div className="flex flex-row">
+                        <MdOutlineYoutubeSearchedFor className="size-9 mb-2" />
+                        <Link className="font-semibold hover:text-yellow-500 ml-3 mb-1 mt-3" href="/Pesquisar"  >Pesquisar</Link>
+                    </div>
+
+                    <div className="flex flex-row">
+                        <IoMdNotifications className="size-9 mb-2 " />
+                        <Link className="font-semibold hover:text-yellow-500 ml-3 mb-1 mt-3" href="/Notificações">Notificações</Link>
+                    </div>
+
+                    <div className="flex flex-row">
+                        <FaEnvelope className="size-7 mb-2 ml-1" />
+                        <Link className="font-semibold hover:text-yellow-500 ml-4 mb-1 mt-3" href="/Mensagens">Mensagens</Link>
+                    </div>
+
+                    <div className="flex flex-row">
+                        <FaUser className="size-7 mb-2 ml-1" />
+                        <Link className="font-semibold hover:text-yellow-500 ml-4 mb-1 mt-3" href="/Perfil">Perfil</Link>
+                     </div>
+
+                     <div className="flex flex-row">
+                        <GiExitDoor className="size-8 mb-2 ml-1" />
+                        <Link className="font-semibold hover:text-yellow-500 ml-3 mb-1 mt-3" href="/Sair">Sair</Link>
+                        </div>
+
                 </ul>
             </div>
 
 
 
 
-            <button className="bg-green-500 text-white py-2 px-4 m-4 rounded-sm hover:bg-green-600"
+
+            <button className=" flex items-center justify-center gap-2 bg-green-500 text-white text-lg font-normal py-2 rounded-full hover:bg-green-600 transition duration-300 mb-72"
                 onClick={() => setIsModalOpen(true)}
             >
                 Criar Publicação

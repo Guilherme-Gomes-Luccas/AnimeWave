@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        backgroundAnimeWave:"#E1F8FF",
       },
       fontFamily: {
         kanit: ["Kanit", "sans-serif"],
