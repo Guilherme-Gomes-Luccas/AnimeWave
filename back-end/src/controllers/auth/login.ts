@@ -3,8 +3,6 @@ import { Request, Response } from 'express';
 import { validateUserToLogin } from 'src/models/schemas/userSchema';
 import { getUserByEmail, updateUserData } from 'src/models/userModel';
 import * as bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { SECRET_KEY } from '../../config';
 import { generateAccessToken } from './config/generateAccessToken';
 import { generateRefreshToken } from './config/generateRefreshToken';
 import { User } from 'src/models/userInterface';
@@ -27,9 +25,9 @@ export class LoginUser {
       //Buscar user pelo email
       const response = await getUserByEmail(loginValidated.data.email);
 
-      if (!response) {
+      if (response === null) {
         return res.status(400).json({
-          error: 'Email ou senha inválida! (email não encontrado)',
+          error: 'Email e/ou senha inválidos!',
         });
       }
 
@@ -43,8 +41,8 @@ export class LoginUser {
         public_id: response.public_id,
         photo: response.photo,
         access_token: accessToken,
-        refresh_token: refreshToken
-      }
+        refresh_token: refreshToken,
+      };
 
       //Comparar a senha enviada com o hash armazenado
       const passValid = bcrypt.compareSync(
@@ -54,26 +52,23 @@ export class LoginUser {
 
       if (!passValid) {
         return res.status(400).json({
-          error: 'Email ou senha inválida! (senha inválida)',
+          error: 'Email e/ou senha inválidos!',
         });
       }
-
-      console.log(accessToken)
-      console.log(refreshToken)
 
       await updateUserData(user);
 
       res.cookie('accessToken', accessToken, {
-        httpOnly: true,
+        httpOnly: false,
         sameSite: 'lax',
         secure: false,
         maxAge: 3600000,
         path: '/',
         domain: 'localhost',
       });
-  
+
       res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
+        httpOnly: false,
         sameSite: 'lax',
         secure: false,
         maxAge: 3600000,
@@ -83,13 +78,13 @@ export class LoginUser {
 
       return res.status(200).json({
         refreshToken,
-        accessToken
-      })
+        accessToken,
+      });
     } catch (error) {
       if (error.code === 'P2002') {
         res.status(400).json({ error: 'ERRO' });
       } else {
-        res.status(400).json({error})
+        res.status(400).json({ error });
       }
     }
   }

@@ -86,7 +86,7 @@ export default function Cadastro() {
 
 	return (
 		<>
-			<div className="registerForm">
+			<div className="mt-10 registerForm">
 			
 				<Image 
 					src={'/img/logov4.svg'}

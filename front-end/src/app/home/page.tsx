@@ -9,6 +9,8 @@ import PostCard, { PostCardProps } from "../components/PostCard";
 import Slider from "@/components/Slider/Slider";
 import Post from "../components/Post";
 import Search from "../components/Search";
+import { redirect } from "next/navigation";
+import { GetServerSideProps } from "next";
 
 export interface Post {
   public_id: string,
@@ -20,16 +22,29 @@ export interface Post {
   photo: string
 }
 
+export interface HomeProps {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export default async function Home() {
   const cookieStore = await cookies();
-  let accessToken = cookieStore.get('accessToken');
-  const refreshToken = cookieStore.get('refreshToken');
+
+  let accessToken = cookieStore.get('accessToken')?.value;
+  const refreshToken = cookieStore.get('refreshToken')?.value;
+
   const posts = Array<PostCardProps>();
+
+  console.log(accessToken);
   const getSession = async () => {
-    console.log('1: ', accessToken);
-    accessToken = await session(accessToken?.value, refreshToken?.value);
-    console.log('2: ', accessToken);
-    return accessToken;
+    accessToken = await session(accessToken, refreshToken);
+
+    if(accessToken == null) {
+      redirect('/login');
+    
+    } else {
+      return accessToken;
+    }
   }
   
   const getUserData = async (accessToken: string) => {

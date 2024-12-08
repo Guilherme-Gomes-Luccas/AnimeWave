@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Controller, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { updateUserData, verifyRefreshToken } from 'src/models/userModel';
@@ -15,44 +15,50 @@ export class RefreshController {
       });
     }
 
-    const public_id = verify(token, process.env.TOKEN_KEY).sub;
+    try {
+      const public_id = verify(token, process.env.TOKEN_KEY).sub;
 
-    if (!public_id) {
+      if (!public_id) {
+        console.log('aaaaa');
+        return res.status(401).json({
+          message: ' Não autorizado! Token inválido',
+        });
+      }
+
+      const refreshTokenUser = await verifyRefreshToken(
+        token,
+        <string>public_id,
+      );
+
+      if (!refreshTokenUser) {
+        return res.status(401).json({
+          message: 'Não autorizado! Refresh Token inválido',
+        });
+      }
+
+      const newAccessToken = generateAccessToken(refreshTokenUser);
+
+      refreshTokenUser.access_token = newAccessToken;
+      await updateUserData(refreshTokenUser);
+
+      res.cookie('accessToken', newAccessToken, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: false,
+        maxAge: 3600000,
+        path: '/',
+        domain: 'localhost',
+      });
+
+      return res.status(200).json({
+        message: 'Token atualizado com sucesso',
+        accessToken: newAccessToken,
+      });
+    } catch (error) {
       return res.status(401).json({
+        error: error.message,
         message: ' Não autorizado! Token inválido',
       });
     }
-
-    const refreshTokenUser = await verifyRefreshToken(token, <string>public_id);
-
-    if (!refreshTokenUser) {
-      return res.status(401).json({
-        message: 'Não autorizado! Refresh Token inválido',
-      });
-    }
-
-    const newAccessToken = generateAccessToken(refreshTokenUser);
-
-    refreshTokenUser.access_token = newAccessToken;
-    await updateUserData(refreshTokenUser);
-
-    res.cookie('accessToken', newAccessToken, {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: false,
-      maxAge: 3600000,
-      path: '/',
-      domain: 'localhost',
-    });
-
-    return res.status(200).json({
-      message: 'Token atualizado com sucesso',
-      accessToken: newAccessToken,
-    });
-  }
-
-  @Get('check-cookie')
-  async checkCookie(@Req() req: Request) {
-    return { accessToken: req.cookies.accessToken || null };
   }
 }

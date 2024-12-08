@@ -30,7 +30,6 @@ export default function Login() {
 
   const cookies = useCookies();
 
-  const messageError: Array<Error> = [];
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -59,30 +58,67 @@ export default function Login() {
 				})
 			}else {
 
-        const response = await fetch("http://localhost:3001/login", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email, password })
-        })
+        try {
+          const response = await fetch("http://localhost:3001/login", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({ email, password })
+          })
+  
+          const responseData = await response.json();
+          
+          if (responseData.error) {
+            setError(responseData.error);
+          
+          }else {
+            cookies.set('accessToken', responseData.accessToken, {
+              sameSite: 'lax',
+              secure: false,
+              path: '/',
+              domain: 'localhost',
+            })
+            cookies.set('refreshToken', responseData.refreshToken, {
+              sameSite: 'lax',
+              secure: false,
+              path: '/',
+              domain: 'localhost',
+            })
 
-        const responseData = await response.json()
+            window.location.href = "/home";
+           
+          }
 
-        cookies.set('accessToken', responseData.accessToken)
-        cookies.set('refreshToken', responseData.refreshToken)
-				window.location.href = '/';
+        }catch (error) {
+          console.log(error);
+        }
 			}
     }
   }
 
+	const handleGoogleSubmit = async () => {
+		window.location.href = "http://localhost:3001/auth/google/login";
+	}
+
   return (
     <>
       <GoBack />
-      <div className="mt-20 flex flex-col items-center justify-center">
-        <Image src={'/img/logov4.svg'} width={640} height={640} alt="logo-animeWave" className="ml-32" />
-        <div className="bg-white rounded-3xl shadow-2xl w-3/12 h-96 flex flex-col items-center">
+      <div className="mt-14 flex flex-col items-center justify-center">
+
+        <Image 
+          src={'/img/logov4.svg'} 
+          width={640} 
+          height={640} 
+          alt="logo-animeWave" 
+          className="ml-32" 
+        />
+
+        <div className="bg-white rounded-3xl shadow-2xl w-4/12 h-fit flex flex-col items-center">
+
           <h1 className={`${kanit.className} pt-2 text-3xl self-start pl-6 text-black`}>Login</h1>
+
           <form action="" className="flex flex-col w-full" onSubmit={handleSubmit}>
             <div className="w-full">
               <div>
@@ -92,14 +128,40 @@ export default function Login() {
 
               <div>
                 <Input label="Senha" placeholder="Digite sua senha" type="password" onChange={(e) => setPassword(e.target.value)} />
-                {passwordError && <Text content={passwordError} color="red" size="0.75rem" marginBottom="0" />}
+                {passwordError && <Text 
+                  content={passwordError} 
+                  color="red" 
+                  size="14px" 
+                  />}
               </div>
             </div>
 
-            <a href="/" className="pb-4 pl-6 font-medium text-blue-500">Esqueci minha senha</a>
+            <a href="/" className={`pb-4 pl-6 font-medium text-blue-500 ${kanit.className} underline`}>Esqueci minha senha</a>
 
-            <div className="self-center pb-3">
-              <Button color="#006400" text="Acessar conta" width="100%" />
+            {error && <Text
+							content={error}
+							color="red"
+							size="14px"
+					  />}
+
+            <div className="mt-6 flex flex-col gap-3 items-center pb-3">
+              <Button 
+                color="#006400" 
+                text="Acessar conta" 
+                type="submit"
+              />
+
+              <p className={`${kanit.className} text-black text-lg`}>OU</p>
+
+              <Button 
+                color="white"
+                text="Entrar com Google"
+                type="button"
+                border="black solid 2px"
+                textColor="black"
+                icon="/img/google.svg"
+                onClick={handleGoogleSubmit}
+						  />
             </div>
           </form>
         </div>
