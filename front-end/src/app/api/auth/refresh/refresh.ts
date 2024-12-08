@@ -1,9 +1,5 @@
 "use server"
-
-import { cookies } from "next/headers";
-import { setNewToken } from "./setNewToken";
-
-export async function refresh(refreshToken: string | undefined) {
+export async function refresh(refreshToken: string | undefined | string[]) {
   if(!refreshToken) {
     return new Response('Refresh token não encontrado', { status: 401 });
   }
@@ -21,11 +17,7 @@ export async function refresh(refreshToken: string | undefined) {
     });
     
     const responseData = await response.json();
-    console.log('refresh: ', responseData);
-    const cookieStore = await cookies();
-
     return responseData;
-
   }catch (error) {
     console.error(error);
   }

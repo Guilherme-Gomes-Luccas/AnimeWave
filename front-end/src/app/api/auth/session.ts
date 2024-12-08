@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { refresh } from "./refresh/refresh";
 import nookies from "nookies";
 
-export async function session(accessToken: string | undefined, refreshToken: string | undefined) {
+export async function session(accessToken: string | undefined | string[], refreshToken: string | undefined | string[]) {
   const cookieStore = await cookies();
 
   console.log('TokenSession: ', accessToken);
@@ -29,7 +29,12 @@ export async function session(accessToken: string | undefined, refreshToken: str
         path: '/'
       })
   
-      return newToken.accessToken;
+      if (newToken.error) {
+        return null;
+      
+      }else {
+        return newToken.accessToken;
+      }
     }
 
     return cookieStore.get('accessToken')?.value;
