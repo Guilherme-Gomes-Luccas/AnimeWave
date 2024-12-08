@@ -7,37 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  //Indetificador
-  public_id    String  @id @default(uuid())
-
-  //Informações do usuário
-  name         String  @db.VarChar(100)
-  email        String  @unique @db.VarChar(200)
-  password     String  @db.VarChar(255)
-  photo        String? @db.VarChar(255)
-  
-  //Tokens de sessão do usuário
-  access_token String? @db.Text()
-  refresh_token String? @db.Text()
-
-  //Conexão com os posts
-  posts       post[]
+model post {
+  public_id String @id @default(uuid())
+  id_user   String @db.VarChar(255)
+  hashtags  String[] 
+  content   String
+  photo     String @db.VarChar(255)
+  user      user   @relation(fields: [id_user], references: [public_id])
 }
 
-model post {
-  //Identificadores
-  public_id   String    @id @default(uuid())
-  id_user     String    @db.VarChar(255)
-
-  //Variavel para organizar no get
-  date        DateTime  @db.Date()
-
-  //Conteúdo
-  hashtags    String[]
-  content     String    @db.Text()
-  photo       String    @db.VarChar(255) 
-
-  //Conexão com o usuário
-  user        user      @relation(fields: [id_user], references: [public_id])
+model user {
+  public_id     String  @id @default(uuid())
+  name          String  @db.VarChar(100)
+  email         String  @unique @db.VarChar(200)
+  password      String  @db.VarChar(255)
+  access_token  String?
+  photo         String? @db.VarChar(255)
+  refresh_token String?
+  post          post[]
 }

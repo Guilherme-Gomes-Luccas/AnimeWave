@@ -1,8 +1,9 @@
-export interface Post {
-    public_id?:  string;
-    id_user:    string
-    hashtags:   string[];
-    content:    string;
-    photo:      string;
-  }
-  
+export interface Posts {
+  public_id?: string;
+  id_user: string;
+  user_photo?: string;
+  username?: string;
+  hashtags?: Array<string>;
+  content: string;
+  photo: string;
+}

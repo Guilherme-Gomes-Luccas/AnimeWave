@@ -1,16 +1,15 @@
-
 import { PrismaClient } from '@prisma/client';
-import { Post } from './postInterface';
+import { Posts } from './postInterface';
 
 const prisma = new PrismaClient();
 
-export const createPost = async (post: Post) => {
+export const createPost = async (post: Posts) => {
   const result = await prisma.post.create({
     data: post,
     select: {
       public_id: true,
       id_user: true,
-      title: true,
+      hashtags: true,
       content: true,
       photo: true,
     },
@@ -19,23 +18,23 @@ export const createPost = async (post: Post) => {
   return result;
 };
 
-export const update = async (post: Post) => {
-    const result = await prisma.post.update({
-      where: {
-        public_id: post.public_id,
-      },
-      data: post,
-      select: {
-        public_id: true,
-        id_user: true,
-        title: true,
-        content: true,
-        photo: true,
-      },
-    });
-  
-    return result;
-  };
+export const update = async (post: Posts) => {
+  const result = await prisma.post.update({
+    where: {
+      public_id: post.public_id,
+    },
+    data: post,
+    select: {
+      public_id: true,
+      id_user: true,
+      hashtags: true,
+      content: true,
+      photo: true,
+    },
+  });
+
+  return result;
+};
 
 export const getPostByUserId = async (id_user: string) => {
   const posts = await prisma.post.findMany({
@@ -45,7 +44,7 @@ export const getPostByUserId = async (id_user: string) => {
     select: {
       public_id: true,
       id_user: true,
-      title: true,
+      hashtags: true,
       content: true,
       photo: true,
     },
@@ -59,9 +58,9 @@ export const getAll = async () => {
     select: {
       public_id: true,
       id_user: true,
-      title: true,
+      hashtags: true,
       content: true,
-      photo: true
+      photo: true,
     },
   });
   return posts;
@@ -75,15 +74,33 @@ export const getById = async (public_id: string) => {
     select: {
       public_id: true,
       id_user: true,
-      title: true,
+      hashtags: true,
       content: true,
-      photo: true
+      photo: true,
     },
   });
 
   return post;
 };
 
+export const getPostsByHashtag = async (hashtag: string) => {
+  const posts = await prisma.post.findMany({
+    where: {
+      hashtags: {
+        has: hashtag,
+      },
+    },
+    select: {
+      public_id: true,
+      id_user: true,
+      hashtags: true,
+      content: true,
+      photo: true,
+    },
+  });
+
+  return posts;
+};
 
 export const remove = async (public_id: string) => {
   const post = await prisma.post.delete({
@@ -93,9 +110,9 @@ export const remove = async (public_id: string) => {
     select: {
       public_id: true,
       id_user: true,
-      title: true,
+      hashtags: true,
       content: true,
-      photo: true
+      photo: true,
     },
   });
 

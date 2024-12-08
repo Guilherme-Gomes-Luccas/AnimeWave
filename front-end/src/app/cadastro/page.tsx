@@ -11,7 +11,6 @@ import Button from "@/components/Button";
 import Input from "@/components/Input/Input";
 import Text from "@/components/Text";
 import Link from "next/link";
-import GoBack from "@/components/GoBack";
 
 const kanit = Kanit({
 	weight: '400',
@@ -84,9 +83,9 @@ export default function Cadastro() {
 	const handleGoogleSubmit = async () => {
 		window.location.href = "http://localhost:3001/auth/google/login";
 	}
+
 	return (
 		<>
-			<GoBack />
 			<div className="registerForm">
 			
 				<Image 
@@ -194,7 +193,7 @@ export default function Cadastro() {
 
 						<Button 
 							color="white"
-							text="Cadastrar com Google"
+							text="Entrar com Google"
 							type="button"
 							border="black solid 2px"
 							textColor="black"
@@ -209,3 +208,4 @@ export default function Cadastro() {
 
 	);
 }
+

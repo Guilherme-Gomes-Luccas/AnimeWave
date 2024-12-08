@@ -83,6 +83,9 @@ const Home: React.FC = () => {
 
   ])
 
+import Cadastro from "./cadastro/page";
+
+export default async function Page() {
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
@@ -107,6 +110,8 @@ const Home: React.FC = () => {
     </div>
 
   );
+    <Cadastro />
+  )
 }
 
 export default Home;

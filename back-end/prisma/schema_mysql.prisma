@@ -31,3 +31,4 @@ model User {
   foto          String?  @db.VarChar(255)
   description   String?  @db.Text()
 }
+

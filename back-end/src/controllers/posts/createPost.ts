@@ -1,8 +1,7 @@
-import { Controller, Post, Req, Res } from "@nestjs/common";
-import { validatePostToCreate } from "src/models/schemas/PostSchema";
+import { Controller, Post, Req, Res } from '@nestjs/common';
+import { validatePostToCreate } from 'src/models/schemas/PostSchema';
 import { Request, Response } from 'express';
-import { v4 as uuid } from 'uuid';
-import { createPost } from "src/models/postModel";
+import { createPost } from 'src/models/postModel';
 
 @Controller('novo-post')
 export class CreatePostController {
@@ -15,9 +14,9 @@ export class CreatePostController {
 
             const errors = validatedPost.error?.issues;
 
-            if (!validatedPost.success) {
-                res.status(400).json({ error: errors });
-            }
+      if (!validatedPost.success) {
+        res.status(400).json({ error: errors });
+      }
 
             const post = await createPost({
                 id_user: validatedPost.data.id_user,
@@ -26,19 +25,18 @@ export class CreatePostController {
                 photo: validatedPost.data.photo
             })
 
-            res.status(201).json({
-                success: 'Post criado com sucesso',
-                post: post,
-            });
-
-        } catch (error) {
-            if (error.code === 'P2002') {
-                res.status(400).json({
-                    error: [{ message: 'Erro P2002' }],
-                });
-            } else {
-                res.status(400).json({error: error})
-            }
-        }
+      res.status(201).json({
+        success: 'Post criado com sucesso',
+        post: post,
+      });
+    } catch (error) {
+      if (error.code === 'P2002') {
+        res.status(400).json({
+          error: [{ message: 'Erro P2002' }],
+        });
+      } else {
+        res.status(400).json({ error: error });
+      }
     }
+  }
 }

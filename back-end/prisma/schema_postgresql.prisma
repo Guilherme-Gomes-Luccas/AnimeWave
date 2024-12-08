@@ -19,3 +19,4 @@ model users {
   description   String?
   photo         String? @db.VarChar(255)
 }
+
