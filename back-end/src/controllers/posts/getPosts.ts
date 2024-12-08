@@ -44,7 +44,12 @@ export class GetPostsController {
 
   @Post('search/:query')
   async getPostsByHashtag(@Req() req: Request, @Res() res: Response) {
-    const query = req.params.query;
+    let query = req.params.query;
+
+    if (!query.includes('#')) {
+      query = `#${query}`;
+    }
+
     try {
       const postsData = await getPostsByHashtag(query);
       const posts = await this.postsArray(postsData);
