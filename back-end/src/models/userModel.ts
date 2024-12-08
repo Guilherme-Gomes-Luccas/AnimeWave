@@ -92,6 +92,7 @@ export const getById = async (public_id: string) => {
       public_id: true,
       name: true,
       email: true,
+      photo: true,
     },
   });
 

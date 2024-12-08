@@ -10,7 +10,7 @@ datasource db {
 model post {
   public_id String @id @default(uuid())
   id_user   String @db.VarChar(255)
-  title     String @db.VarChar(255)
+  hashtags  String[] 
   content   String
   photo     String @db.VarChar(255)
   user      user   @relation(fields: [id_user], references: [public_id])
