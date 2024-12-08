@@ -27,14 +27,17 @@ model user {
 
 model post {
   //Identificadores
-  public_id   String  @id @default(uuid())
-  id_user     String  @db.VarChar(255)
+  public_id   String    @id @default(uuid())
+  id_user     String    @db.VarChar(255)
+
+  //Variavel para organizar no get
+  date        DateTime  @db.Date()
 
   //Conteúdo
-  title       String  @db.VarChar(255)
-  content     String  @db.Text()
-  photo       String  @db.VarChar(255) 
+  hashtags    String[]
+  content     String    @db.Text()
+  photo       String    @db.VarChar(255) 
 
   //Conexão com o usuário
-  user        user    @relation(fields: [id_user], references: [public_id])
+  user        user      @relation(fields: [id_user], references: [public_id])
 }

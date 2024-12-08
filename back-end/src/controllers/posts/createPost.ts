@@ -9,9 +9,9 @@ export class CreatePostController {
     @Post()
     async create(@Req() req: Request, @Res() res: Response) {
         try {
-            const { id_user, title, content, photo } = req.body;
+            const { id_user, hashtags, content, photo } = req.body;
 
-            const validatedPost = validatePostToCreate({ id_user, title, content, photo })
+            const validatedPost = validatePostToCreate({ id_user, hashtags, content, photo })
 
             const errors = validatedPost.error?.issues;
 
@@ -21,7 +21,7 @@ export class CreatePostController {
 
             const post = await createPost({
                 id_user: validatedPost.data.id_user,
-                title: validatedPost.data.title,
+                hashtags: validatedPost.data.hashtags,
                 content: validatedPost.data.content,
                 photo: validatedPost.data.photo
             })

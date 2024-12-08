@@ -11,18 +11,10 @@ import { IoMdNotifications } from "react-icons/io";
 import { FaEnvelope, FaUser } from "react-icons/fa";
 import { GiExitDoor } from "react-icons/gi";
 
-
-
-
-
-interface Post {
-    id: number;
-    username: string;
-    tag: string;
-    content: string;
+interface Error {
+    message: string;
+    path: Array<string | number>;
 }
-
-
 
 export default function Sidebar() {
 
@@ -31,22 +23,57 @@ export default function Sidebar() {
     const [newPostContent, setNewPostContent] = useState('');
     const [newPostTitle, setNewPostTitle] = useState('');
 
-    const handleCreatPost = () => {
+    const [ titleError, setTitleError ] = useState('');
+    const [ contentError, setContentError ] = useState('');
+    const [ error, setError ] = useState("");
+
+    const handleCreatPost = async () => {
         if (newPostContent.trim() !== '' || newPostContent.trim() !== '') {
             return;
         }
 
-        const newPost: Post = {
-            id: Date.now(),
-            username: 'Guigahoul',
-            tag: '@DragonBallBalls',
-            content: `${newPostTitle}\n\n${newPostContent}`,
-        };
+        if (!newPostTitle || !newPostContent) {
+            setError('Preencha todos os campos!')
+        } else {
+            const newPost: Post = {
+                id_post: "abcd",
+                id_user: "240b4088-7e5d-4615-8684-25b64bbb78d6",
+                date: Date.now(),
+                tag: '@DragonBallBalls',
+                title: `${newPostTitle}`,
+                content: `${newPostContent}`,
+            };
 
-        setPosts([newPost, ...posts]);
-        setNewPostContent('');
-        setNewPostTitle('');
-        setIsModalOpen(false);
+            const response = await fetch("http://localhost:3001/novo-post", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(newPost)
+			});
+
+            const data = await response.json();
+
+			if(data.error) {
+				data.error.map((err: Error) => {
+					switch(err.path[0]) {
+						case 'title':
+							setTitleError(err.message);
+							break;
+
+						case 'content':
+							setContentError(err.message);
+							break;
+					}
+				})
+            } else {
+                setPosts([newPost, ...posts]);
+                setNewPostContent('');
+                setNewPostTitle('');
+                setIsModalOpen(false);
+                window.location.href = '/home';
+            }
+        }
     };
 
     return (

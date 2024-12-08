@@ -13,11 +13,10 @@ export class GetPostsController {
             const posts: Post[] = postsData.map(post => ({
                 public_id: post.public_id,
                 id_user: post.id_user,
-                title: post.title,
+                hashtags: post.hashtags,
                 content: post.content,
                 photo: post.photo,
             }));
-
 
             res.status(200).json(posts);
         } catch (error) {

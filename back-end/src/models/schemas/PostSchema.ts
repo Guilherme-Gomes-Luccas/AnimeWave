@@ -10,7 +10,7 @@ const userSchema = z.object({
     required_error: 'O ID público é obrigatório',
     invalid_type_error: 'O ID público deve ser uma string',
   }),
-  title: z
+  hashtags: z
     .string({
       required_error: 'O título é obrigatório',
       invalid_type_error: 'O título deve ser uma string',
