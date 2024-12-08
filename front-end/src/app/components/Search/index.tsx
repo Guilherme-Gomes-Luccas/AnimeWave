@@ -5,6 +5,8 @@ import SearchBar from "../SearchBar";
 import { PostCardProps } from "../PostCard";
 import PostCard from "../PostCard";
 import { Post } from "../../home/page";
+import Loading from "@/components/Loading/Loading";
+import Text from "@/components/Text";
 
 interface SearchProps {
   items: Array<string | undefined>;
@@ -12,27 +14,46 @@ interface SearchProps {
 }
 export default function Search({items, posts}: SearchProps) {
   const [ searchPosts, setSearchPosts ] = useState(posts);
+  const [ isLoading, setIsLoading ] = useState(false);
+  const [ messageError, setMessageError ] = useState("");
 
   const search = async (query: string) => {
-    try {
+    setMessageError("");
 
-      const response = await fetch(`http://localhost:3001/get-posts/search/${encodeURIComponent(query)}`, {
-        method: 'POST',
-      });
+    if(query) {
+      setSearchPosts([]);
+      setIsLoading(true);
 
-      const responseData = await response.json();
-      const updatedPosts: PostCardProps[] = responseData.map((post: Post) => ({
-          avatar: post.user_photo,
-          username: post.username,
-          content: post.content,
-          hashtags: post.hashtags
-        })
-      );
+      try {
 
-      setSearchPosts(updatedPosts);
-
-    } catch (error) {
-      console.log(error);
+        const response = await fetch(`http://localhost:3001/get-posts/search/${encodeURIComponent(query)}`, {
+          method: 'POST',
+        });
+  
+        const responseData = await response.json();
+  
+        if (responseData.length === 0) {
+          setIsLoading(false);
+          setMessageError("Nenhum post encontrado");
+        
+        } else {
+          const updatedPosts: PostCardProps[] = responseData.map((post: Post) => ({
+            avatar: post.user_photo,
+            username: post.username,
+            content: post.content,
+            hashtags: post.hashtags
+            })
+          );
+          
+          setIsLoading(false);
+          setSearchPosts(updatedPosts);
+        }
+  
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setSearchPosts(posts);
     }
   }
 
@@ -41,6 +62,22 @@ export default function Search({items, posts}: SearchProps) {
       <div className=" bg-[#E1F8FF] flex flex-row  items-start justify-center pt-8">
         <SearchBar items={items} onSearch={search}/>
       </div>
+
+      {isLoading && (
+        <div className="mt-20 flex w-full h-fit justify-center items-center">
+          <Loading />
+        </div>
+     )}
+
+     {messageError && (
+      <div className="mt-16 flex w-full h-fit justify-center items-center">
+        <Text 
+        content={messageError}
+        color="red"
+        size="18px"
+       />
+      </div>
+    )}
 
       <div className="bg-[#E1F8FF]  max-h-screen py-8">
         <div className="grid grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-start gap-1 w-full mx-auto p-5" >

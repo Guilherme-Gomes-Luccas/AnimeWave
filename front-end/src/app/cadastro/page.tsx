@@ -11,7 +11,6 @@ import Button from "@/components/Button";
 import Input from "@/components/Input/Input";
 import Text from "@/components/Text";
 import Link from "next/link";
-import GoBack from "@/components/GoBack";
 
 const kanit = Kanit({
 	weight: '400',
@@ -87,7 +86,6 @@ export default function Cadastro() {
 
 	return (
 		<>
-			<GoBack />
 			<div className="registerForm">
 			
 				<Image 
