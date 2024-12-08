@@ -74,7 +74,6 @@ export default function Login() {
             setError(responseData.error);
           
           }else {
-            console.log(responseData);
             cookies.set('accessToken', responseData.accessToken, {
               sameSite: 'lax',
               secure: false,
@@ -87,7 +86,7 @@ export default function Login() {
               path: '/',
               domain: 'localhost',
             })
-            
+
             window.location.href = "/home";
            
           }
