@@ -36,7 +36,6 @@ export default function Sidebar({username, photo}: SidebarProps) {
       {isOpen ? (
         <div className="h-screen flex flex-col gap-8">
           <p className={`text-white ${kanit.className} mt-3 mr-7`}>{username}</p> 
-
           <p className={kanit.className} style={style.text}>Perfil</p>
           <p className={kanit.className} style={style.text}>Minhas publicações</p>
           <p className={kanit.className} style={style.text}>Sair</p>

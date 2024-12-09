@@ -84,10 +84,12 @@ export default function Search({items, posts}: SearchProps) {
           {searchPosts.map((post, index) => (
             <PostCard
               key={index}
+              id={post.id}
               avatar={post.avatar}
               username={post.username}
               content={post.content}
               hashtags={post.hashtags}
+              width="400px"
             />
           ))}
         </div>

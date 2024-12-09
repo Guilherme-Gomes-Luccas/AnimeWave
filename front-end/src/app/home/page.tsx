@@ -7,7 +7,6 @@ import { session } from "../api/auth/session";
 import Footer from "../components/Footer";
 import PostCard, { PostCardProps } from "../components/PostCard";
 import Slider from "@/components/Slider/Slider";
-import Post from "../components/Post";
 import Search from "../components/Search";
 import { redirect } from "next/navigation";
 import { GetServerSideProps } from "next";
@@ -19,7 +18,8 @@ export interface Post {
   username: string,
   hashtags: Array<string>,
   content: string,
-  photo: string
+  photo: string,
+  date: string
 }
 
 export interface HomeProps {
@@ -75,6 +75,7 @@ export default async function Home() {
 
       postData.map((post: Post) => {
         posts.push({
+          id: post.public_id,
           avatar: post.user_photo,
           username: post.username,
           content: post.content,

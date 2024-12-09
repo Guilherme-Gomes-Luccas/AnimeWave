@@ -20,6 +20,8 @@ interface ButtonProps {
 export default function Button({color, text, type, border, textColor, icon, width, onClick}: ButtonProps) {
     return(
         <button
+            className={kanit.className}
+
             style={{
                 display: "flex",
                 justifyContent: "space-around",
@@ -34,8 +36,6 @@ export default function Button({color, text, type, border, textColor, icon, widt
                 border: border || "none",
                 padding: "8px"
             }}
-
-            className={kanit.className}
 
             type={type || "submit"}
 
