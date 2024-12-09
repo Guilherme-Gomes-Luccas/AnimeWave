@@ -8,12 +8,13 @@ datasource db {
 }
 
 model post {
-  public_id String @id @default(uuid())
-  id_user   String @db.VarChar(255)
-  hashtags  String[] 
+  public_id String   @id @default(uuid())
+  id_user   String   @db.VarChar(255)
+  date      DateTime @db.Date @default(now())
   content   String
-  photo     String @db.VarChar(255)
-  user      user   @relation(fields: [id_user], references: [public_id])
+  photo     String   @db.VarChar(255)
+  hashtags  String[]
+  user      user     @relation(fields: [id_user], references: [public_id])
 }
 
 model user {
@@ -21,8 +22,8 @@ model user {
   name          String  @db.VarChar(100)
   email         String  @unique @db.VarChar(200)
   password      String  @db.VarChar(255)
-  access_token  String?
   photo         String? @db.VarChar(255)
+  access_token  String?
   refresh_token String?
   post          post[]
 }

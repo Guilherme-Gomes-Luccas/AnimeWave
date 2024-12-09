@@ -5,25 +5,36 @@ import { createPost } from 'src/models/postModel';
 
 @Controller('novo-post')
 export class CreatePostController {
-    @Post()
-    async create(@Req() req: Request, @Res() res: Response) {
-        try {
-            const { id_user, hashtags, content, photo } = req.body;
+  @Post()
+  async create(@Req() req: Request, @Res() res: Response) {
+    try {
+      const { id_user, hashtags, content, photo } = req.body;
 
-            const validatedPost = validatePostToCreate({ id_user, hashtags, content, photo })
+      const validatedPost = validatePostToCreate({
+        id_user,
+        hashtags,
+        content,
+        photo,
+      });
 
-            const errors = validatedPost.error?.issues;
+      const errors = validatedPost.error?.issues;
 
       if (!validatedPost.success) {
         res.status(400).json({ error: errors });
       }
 
-            const post = await createPost({
-                id_user: validatedPost.data.id_user,
-                hashtags: validatedPost.data.hashtags,
-                content: validatedPost.data.content,
-                photo: validatedPost.data.photo
-            })
+      for (let i = 0; i < validatedPost.data.hashtags.length; i++) {
+        if (!validatedPost.data.hashtags[i].startsWith('#')) {
+          validatedPost.data.hashtags[i] = `#${validatedPost.data.hashtags[i]}`;
+        }
+      }
+
+      const post = await createPost({
+        id_user: validatedPost.data.id_user,
+        hashtags: validatedPost.data.hashtags,
+        content: validatedPost.data.content,
+        photo: validatedPost.data.photo,
+      });
 
       res.status(201).json({
         success: 'Post criado com sucesso',

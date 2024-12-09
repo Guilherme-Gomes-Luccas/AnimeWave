@@ -6,4 +6,5 @@ export interface Posts {
   hashtags?: Array<string>;
   content: string;
   photo: string;
+  date?: string | Date;
 }

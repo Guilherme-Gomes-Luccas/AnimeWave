@@ -61,6 +61,7 @@ export const getAll = async () => {
       hashtags: true,
       content: true,
       photo: true,
+      date: true,
     },
   });
   return posts;
@@ -77,6 +78,7 @@ export const getById = async (public_id: string) => {
       hashtags: true,
       content: true,
       photo: true,
+      date: true,
     },
   });
 
