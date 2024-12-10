@@ -37,7 +37,7 @@ export default function PostPage({id, editIcon, deleteButton}: PostPageProps) {
   })
 
   return (
-    <div className="w-[750px] h-fit bg-white rounded-md p-10 flex flex-col gap-5">
+    <div className="w-[700px] h-fit bg-white rounded-md p-10 flex flex-col gap-5">
       <div className="flex items-center gap-5 w-fit">
         <Image 
           src={post?.user_photo ||'/img/avatar-black.svg'}
@@ -58,8 +58,8 @@ export default function PostPage({id, editIcon, deleteButton}: PostPageProps) {
       
       <Image 
         src={post?.photo ||'/img/logov4.svg'}
-        width={550}
-        height={550}
+        width={500}
+        height={500}
         alt={'imagem do post'}
         className="self-center rounded-sm"
       />

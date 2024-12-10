@@ -6,8 +6,6 @@ import nookies from "nookies";
 export async function session(accessToken: string | undefined | string[], refreshToken: string | undefined | string[]) {
   const cookieStore = await cookies();
 
-  console.log('TokenSession: ', accessToken);
-
   try {
     const response = await fetch('http://localhost:3001/session', {
       method: 'GET',
@@ -19,9 +17,7 @@ export async function session(accessToken: string | undefined | string[], refres
     
     const responseData = await response.json();
 
-    console.log('session: ', responseData);
     if (responseData.error) {
-      console.log('refresh token');
       const newToken = await refresh(refreshToken);
 
       nookies.set(null, 'accessToken', newToken.accessToken, {

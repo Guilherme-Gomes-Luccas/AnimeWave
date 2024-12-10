@@ -104,7 +104,7 @@ export default async function Home() {
         <Slider />
       </div> 
 
-      <Search items={items} posts={posts} />
+      <Search items={items} posts={posts}/>
       <Footer />
     
     </div>

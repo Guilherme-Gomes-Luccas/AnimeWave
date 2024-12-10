@@ -11,10 +11,12 @@ import Text from "@/components/Text";
 interface SearchProps {
   items: Array<string | undefined>;
   posts: Array<PostCardProps>;
-  width?: string;
+  width?: number;
   gap?: string;
+  myPosts?: boolean;
+
 }
-export default function Search({items, posts, width, gap}: SearchProps) {
+export default function Search({items, posts, width, gap, myPosts}: SearchProps) {
   const [ searchPosts, setSearchPosts ] = useState(posts);
   const [ isLoading, setIsLoading ] = useState(false);
   const [ messageError, setMessageError ] = useState("");
@@ -91,7 +93,8 @@ export default function Search({items, posts, width, gap}: SearchProps) {
               username={post.username}
               content={post.content}
               hashtags={post.hashtags}
-              width= {width || "400"}
+              width={width || 400}
+              myPosts={myPosts}
             />
           ))}
         </div>

@@ -13,14 +13,12 @@ export default async function MyPosts() {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get('refreshToken')?.value;
   let accessToken = cookieStore.get('accessToken')?.value;
-  console.log(accessToken);
 
   const getPosts = async () => {
     myPosts = [];
     isLoading = true;
 
     accessToken = await getSession();
-    console.log(accessToken);
 
     try {
       const response = await fetch('http://localhost:3001/get-posts/my-posts', {
@@ -33,7 +31,6 @@ export default async function MyPosts() {
 
       let responseData = await response.json();
 
-      console.log(responseData);
       while(responseData.error) {
         accessToken = await getSession();
         const response = await fetch('http://localhost:3001/get-posts/my-posts', {
@@ -82,8 +79,8 @@ export default async function MyPosts() {
     <div className="flex">
       <Sidebar />
 
-      <div className="flex flex-col  w-full h-full border-solid border-2 border-black items-center">
-        <Search items={items} posts={myPosts} width="200" gap="5"/>
+      <div className="flex flex-col w-full h-full items-center">
+        <Search items={items} posts={myPosts} width={200} gap="5" myPosts={true}/>
 
       </div>
     </div>
