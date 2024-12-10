@@ -1,10 +1,11 @@
 import { Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { Posts } from 'src/models/postInterface';
-import { getAll } from 'src/models/postModel';
+import { getAll, getPostByUserId } from 'src/models/postModel';
 import { getById } from 'src/models/userModel';
 import { getById as getPostById } from 'src/models/postModel';
 import { getPostsByHashtag } from 'src/models/postModel';
+import { verify } from 'jsonwebtoken';
 
 @Controller('get-posts')
 export class GetPostsController {
@@ -73,6 +74,29 @@ export class GetPostsController {
     } catch (error) {
       console.log(error);
       return res.status(404).json({ error: error });
+    }
+  }
+
+  @Get('my-posts')
+  async getMyPosts(@Req() req: Request, @Res() res: Response) {
+    const token = req.headers.authorization.split(' ')[1];
+
+    try {
+      const userData = verify(token, process.env.TOKEN_KEY);
+
+      if (!userData) {
+        return res.status(401).json({
+          error: ' Não autorizado! Token inválido',
+        });
+      }
+
+      const myPostsData = await getPostByUserId(<string>userData.sub);
+      const myPosts: Posts[] = await this.postsArray(myPostsData);
+
+      res.status(200).json(myPosts);
+    } catch (error) {
+      console.log('erroo: ', error);
+      return res.status(400).json({ error: error });
     }
   }
 }

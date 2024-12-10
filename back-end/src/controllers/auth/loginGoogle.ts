@@ -25,7 +25,7 @@ export class LoginGoogleController {
     await updateUserData(user);
 
     res.cookie('accessToken', accessToken, {
-      httpOnly: true,
+      httpOnly: false,
       sameSite: 'lax',
       secure: false,
       maxAge: 3600000,
