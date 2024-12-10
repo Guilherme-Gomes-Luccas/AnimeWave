@@ -27,7 +27,6 @@ export default function PostList(){
       });
 
 			setPosts(postsTemp);
-			console.log(posts);
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +47,7 @@ export default function PostList(){
 						username={post.username}
 						content={post.content}
 						hashtags={post.hashtags}
-						width="100px"
+						width="100"
 					/>
 				))}
 			</div>

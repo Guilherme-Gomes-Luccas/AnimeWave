@@ -37,7 +37,7 @@ export default function Sidebar({username, photo}: SidebarProps) {
         <div className="h-screen flex flex-col gap-8">
           <p className={`text-white ${kanit.className} mt-3 mr-7`}>{username}</p> 
           <p className={kanit.className} style={style.text}>Perfil</p>
-          <p className={kanit.className} style={style.text}>Minhas publicações</p>
+          <p className={kanit.className} style={style.text} onClick={() => {window.location.href = "/my-posts"}}>Minhas publicações</p>
           <p className={kanit.className} style={style.text}>Sair</p>
         </div>
       ) :

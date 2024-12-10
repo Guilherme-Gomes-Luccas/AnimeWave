@@ -11,8 +11,10 @@ import Text from "@/components/Text";
 interface SearchProps {
   items: Array<string | undefined>;
   posts: Array<PostCardProps>;
+  width?: string;
+  gap?: string;
 }
-export default function Search({items, posts}: SearchProps) {
+export default function Search({items, posts, width, gap}: SearchProps) {
   const [ searchPosts, setSearchPosts ] = useState(posts);
   const [ isLoading, setIsLoading ] = useState(false);
   const [ messageError, setMessageError ] = useState("");
@@ -80,7 +82,7 @@ export default function Search({items, posts}: SearchProps) {
     )}
 
       <div className="bg-[#E1F8FF]  max-h-screen py-8">
-        <div className="grid grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-start gap-1 w-full mx-auto p-5" >
+        <div className={`grid grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-start gap-${gap || '5'} w-full mx-auto p-5`} >
           {searchPosts.map((post, index) => (
             <PostCard
               key={index}
@@ -89,7 +91,7 @@ export default function Search({items, posts}: SearchProps) {
               username={post.username}
               content={post.content}
               hashtags={post.hashtags}
-              width="400px"
+              width= {width || "400"}
             />
           ))}
         </div>

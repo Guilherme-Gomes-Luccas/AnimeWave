@@ -85,7 +85,7 @@ export default function Sidebar() {
 
   return (
 
-    <div className="w-[25%] p-4 bg-blue-950 shadow-sm flex flex-col">
+    <div className="w-[25%] p-4 bg-blue-950 shadow-sm flex flex-col h-screen">
       <Image
           className="mt-2"
           src={logo}

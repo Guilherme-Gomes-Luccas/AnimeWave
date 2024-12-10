@@ -1,7 +1,4 @@
-import Image from "next/image";
 import Header from "../components/Header";
-import feed from "../image/feed.png";
-import SearchBar from "../components/SearchBar";
 import { cookies } from "next/headers";
 import { session } from "../api/auth/session";
 import Footer from "../components/Footer";
@@ -9,7 +6,6 @@ import PostCard, { PostCardProps } from "../components/PostCard";
 import Slider from "@/components/Slider/Slider";
 import Search from "../components/Search";
 import { redirect } from "next/navigation";
-import { GetServerSideProps } from "next";
 
 export interface Post {
   public_id: string,
@@ -35,7 +31,6 @@ export default async function Home() {
 
   const posts = Array<PostCardProps>();
 
-  console.log(accessToken);
   const getSession = async () => {
     accessToken = await session(accessToken, refreshToken);
 
