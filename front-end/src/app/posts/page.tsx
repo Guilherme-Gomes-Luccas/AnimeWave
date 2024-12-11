@@ -5,6 +5,8 @@ import { Post } from "../home/page";
 import { useEffect, useState } from "react";
 import Sidebar from "../components/SideBar";
 import PostList from "../components/PostList";
+import { useCookies } from "next-client-cookies";
+
 
 export default function Posts() {
   const cookies = useCookies();
