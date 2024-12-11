@@ -8,14 +8,16 @@ export class CreatePostController {
   @Post()
   async create(@Req() req: Request, @Res() res: Response) {
     try {
-      const { id_user, hashtags, content, photo } = req.body;
+      const { user, hashtags, content, photo } = req.body;
 
       const validatedPost = validatePostToCreate({
-        id_user,
+        id_user: user.user.sub,
         hashtags,
         content,
         photo,
       });
+
+      console.log(validatedPost.error);
 
       const errors = validatedPost.error?.issues;
 

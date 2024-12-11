@@ -20,7 +20,6 @@ export class GetPostsController {
     }));
 
     for (let i = 0; i < posts.length; i++) {
-      posts[i].date = new Date(posts[i].date).toLocaleString('pt-BR');
       posts[i].user_photo = (await getById(posts[i].id_user)).photo;
       posts[i].username = (await getById(posts[i].id_user)).name;
     }
