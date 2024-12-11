@@ -72,6 +72,7 @@ export const verifyRefreshToken = async (
 
   return result;
 };
+
 export const getAll = async () => {
   const users = await prisma.user.findMany({
     select: {
