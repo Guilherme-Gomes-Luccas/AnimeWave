@@ -8,6 +8,7 @@ import PostList from "../components/PostList";
 
 export default function Posts() {
   const [id, setId] = useState<string | null>("");
+  let refreshToken = cookies.get('refreshToken');
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -15,7 +16,7 @@ export default function Posts() {
   })
   return (
     <div className="flex">
-      <Sidebar />
+      <Sidebar refreshToken={refreshToken}/>
       <div className="h-screen w-screen flex flex-col">
         <GoBack url="/home"/>
 
