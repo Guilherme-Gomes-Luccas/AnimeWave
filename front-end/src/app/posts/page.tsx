@@ -7,6 +7,8 @@ import Sidebar from "../components/SideBar";
 import PostList from "../components/PostList";
 
 export default function Posts() {
+  const cookies = useCookies();
+
   const [id, setId] = useState<string | null>("");
   let refreshToken = cookies.get('refreshToken');
 
