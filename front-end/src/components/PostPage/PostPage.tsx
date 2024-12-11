@@ -47,7 +47,6 @@ export default function PostPage({id, editIcon, deleteButton}: PostPageProps) {
           className="rounded-full"
         />
         <h1 className={`font-semibold text-black ${kanit.className}`}>{post?.username}</h1>
-        <p className={`${kanit.className} text-gray-600 text-[12px]`}>{post?.date}</p>
         <div className="ml-24 flex gap-3 justify-end w-fit">
           {post?.hashtags && post?.hashtags.map((hashtag: string) => (
             <p key={hashtag} className="text-black font-bold text-sm">{hashtag}</p>

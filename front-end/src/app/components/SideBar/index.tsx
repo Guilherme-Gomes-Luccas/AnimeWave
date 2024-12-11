@@ -4,18 +4,28 @@ import Link from "next/link";
 import logo from "./logo.svg";
 import UploadImage from "./UploadImage.svg";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Kanit } from "next/font/google";
 
 import { MdOutlineYoutubeSearchedFor, MdHome } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
 import { FaEnvelope, FaUser } from "react-icons/fa";
 import { GiExitDoor } from "react-icons/gi";
-import Button from "@/components/Button";
+import { useCookies } from "next-client-cookies";
+import { session } from "@/app/api/auth/session";
+import { redirect } from "next/navigation";
+import { SidebarProps } from "@/components/Sidebar/Sidebar";
 
 interface Error {
   message: string;
   path: Array<string | number>;
+}
+
+interface User {
+  sub: string;
+  name: string;
+  email: string;
+  photo: string;
 }
 
 const kanit = Kanit({
@@ -23,43 +33,113 @@ const kanit = Kanit({
 	subsets: ['latin']
 });
 
-export default function Sidebar() {
+interface Props {
+  refreshToken: string | undefined
+}
+export default function Sidebar({refreshToken}: Props) {
+  const cookies = useCookies();
+  let accessToken = cookies.get('accessToken');
+
+  console.log(refreshToken)
+
+  const [user, setUser] = useState<User>();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]);
   const [newPostContent, setNewPostContent] = useState('');
   const [newPostTitle, setNewPostTitle] = useState('');
+  const [ image, setImage ] = useState('');
 
   const [ titleError, setTitleError ] = useState('');
   const [ contentError, setContentError ] = useState('');
   const [ error, setError ] = useState("");
 
-  const handleCreatPost = async () => {
-    if (newPostContent.trim() !== '' || newPostContent.trim() !== '') {
-      return;
-    }
+  const getSession = async () => {
+    console.log('1:', accessToken);
+    try {
+      const response = await fetch('http://localhost:3001/session', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        },
+        credentials: 'include'
+      });
+      
+      const responseData = await response.json();
 
+      if(responseData.error) {
+        console.log('2: ', refreshToken)
+
+        if(!refreshToken) {
+          window.location.href = '/login';
+        }
+        const newToken = await fetch('http://localhost:3001/refresh', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            refreshToken: refreshToken
+          })
+        });
+
+        const newTokenResponse = await newToken.json();
+        console.log('3:',newTokenResponse);
+
+
+        if(newTokenResponse.error) {
+          window.location.href = '/login';
+        
+        } else {
+          accessToken = newTokenResponse.accessToken;
+        }
+      }
+
+      const responseUser = await fetch('http://localhost:3001/get-user', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+
+      const userData = await responseUser.json();
+
+      setUser(userData);
+      console.log('user:', user);
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getSession();
+  }, [])
+
+  const handleCreatePost = async () => {
+    console.log('usuario: ', `${user?.photo}`)
+    await getSession();
     if (!newPostTitle || !newPostContent) {
       setError('Preencha todos os campos!')
     } else {
-      const newPost: Post = {
-        id_post: "abcd",
-        id_user: "240b4088-7e5d-4615-8684-25b64bbb78d6",
-        date: Date.now(),
-        tag: '@DragonBallBalls',
-        title: `${newPostTitle}`,
-        content: `${newPostContent}`,
-      };
+      console.log('aqui')
 
-      const response = await fetch("http://localhost:3001/novo-post", {
+      const response = await fetch(`http://localhost:3001/novo-post`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newPost)
+      body: JSON.stringify({
+        user: user,
+        hashtags: newPostTitle.split(','),
+        content: newPostContent, 
+        photo: image
+      })
       });
 
       const data = await response.json();
+      console.log(data)
 
       if(data.error) {
         data.error.map((err: Error) => {
@@ -74,7 +154,6 @@ export default function Sidebar() {
           }
         })
       } else {
-        setPosts([newPost, ...posts]);
         setNewPostContent('');
         setNewPostTitle('');
         setIsModalOpen(false);
@@ -82,7 +161,7 @@ export default function Sidebar() {
       }
     }
   };
-
+  
   return (
 
     <div className="w-[25%] p-4 bg-blue-950 shadow-sm flex flex-col h-screen">
@@ -150,7 +229,7 @@ export default function Sidebar() {
             <input
               type="text"
               className="w-full border border-gray-500 text-black bg-backgroundAnimeWave rounded-md p-2 mb-4"
-              placeholder="Digite o título da publicação"
+              placeholder="Digite as hashtags da publicação"
               value={newPostTitle}
               onChange={(e) => setNewPostTitle(e.target.value)}
             />
@@ -163,6 +242,14 @@ export default function Sidebar() {
               placeholder="Digite o conteúdo da publicação"
               value={newPostContent}
               onChange={(e) => setNewPostContent(e.target.value)}
+            />
+
+            <input
+              type="text"
+              className="w-full border border-gray-500 text-black bg-backgroundAnimeWave rounded-md p-2 mb-4"
+              placeholder="Insira a URL da imagem"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
             />
 
             {/*Ações*/}
@@ -186,7 +273,7 @@ export default function Sidebar() {
                             
                 <button
                   className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 "
-                  onClick={handleCreatPost}
+                  onClick={handleCreatePost}
                 >
                   Postar
                 </button>

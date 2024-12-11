@@ -7,6 +7,13 @@ import PostCard from "../PostCard";
 import { Post } from "../../home/page";
 import Loading from "@/components/Loading/Loading";
 import Text from "@/components/Text";
+import { Kanit } from "next/font/google";
+import GoBack from "@/components/GoBack";
+
+const kanit = Kanit({
+	weight: '400',
+	subsets: ['latin']
+});
 
 interface SearchProps {
   items: Array<string | undefined>;
@@ -66,6 +73,13 @@ export default function Search({items, posts, width, gap, myPosts}: SearchProps)
       <div className=" bg-[#E1F8FF] flex flex-row  items-start justify-center pt-8">
         <SearchBar items={items} onSearch={search}/>
       </div>
+
+      {myPosts && (
+        <div className="flex items-center w-full justify-start ml-10">
+          <GoBack url="/home"/>
+            <p className={`text-black ${kanit.className} mt-3`}>Voltar</p>
+          </div>
+      )}
 
       {isLoading && (
         <div className="mt-20 flex w-full h-fit justify-center items-center">

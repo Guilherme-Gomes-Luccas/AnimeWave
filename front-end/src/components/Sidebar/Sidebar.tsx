@@ -13,9 +13,10 @@ const kanit = Kanit({
 export interface SidebarProps {
   username: string;
   photo?: string;
+  id_user?: string
 }
 
-export default function Sidebar({username, photo}: SidebarProps) {
+export default function Sidebar({username, photo, id_user}: SidebarProps) {
   const [ isOpen, setIsOpen ] = useState(false);
 
   const showSideBar = () => {
