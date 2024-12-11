@@ -18,12 +18,14 @@ export const createPost = async (post: Posts) => {
   return result;
 };
 
-export const update = async (post: Posts) => {
+export const update = async (content: string, public_id: string) => {
   const result = await prisma.post.update({
     where: {
-      public_id: post.public_id,
+      public_id: public_id,
     },
-    data: post,
+    data: {
+      content,
+    },
     select: {
       public_id: true,
       id_user: true,

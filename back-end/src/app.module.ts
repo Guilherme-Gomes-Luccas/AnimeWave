@@ -10,6 +10,8 @@ import { RefreshController } from './controllers/auth/refresh';
 import { GetUserDataController } from './controllers/user/getUserData';
 import { CreatePostController } from './controllers/posts/createPost';
 import { GetPostsController } from './controllers/posts/getPosts';
+import { EditPostController } from './controllers/posts/editPost';
+import { DeletePostController } from './controllers/posts/deletePost';
 
 @Module({
   imports: [],
@@ -23,6 +25,8 @@ import { GetPostsController } from './controllers/posts/getPosts';
     GetUserDataController,
     CreatePostController,
     GetPostsController,
+    EditPostController,
+    DeletePostController,
   ],
   providers: [AppService, GoogleStrategy],
 })
